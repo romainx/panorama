@@ -44,7 +44,7 @@ This plugin uses:
 
 Some design elements:
 
-- A mock `Generator` (`ArticlesGenerator`) generating test data.
+- A mock `Generator` (`ArticlesGenerator`) generating test data (see [this doc](http://docs.getpelican.com/en/latest/internals.html#how-to-implement-a-new-generator).
 - A `Reader` reading the articles and retrieving metadata (see [this doc](http://docs.getpelican.com/en/latest/plugins.html#how-to-create-a-new-reader)).
 - A `DataProducer` using metadata to produce statistical data. Several `DataProducer` are available one for each data type.
 - A `DataRenderer` using statistical data to render charts. Several `DataProducer` are available one for each rendering (chart). Each produces a `js` script stored in the Pelican output directory.
