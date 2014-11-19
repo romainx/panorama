@@ -1,0 +1,21 @@
+## TODO
+
+- [x] License definition with [choose a license](http://choosealicense.com) ?
+- [ ] Setup branching, see this [article](http://nvie.com/posts/a-successful-git-branching-model/)
+- [ ] Use Pelican mock objects for test data
+- [ ] Define the design of the `DataProducer` and the `DataRenderer`
+- [ ] Create [unit tests](http://pytest.org/latest/)
+- [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)
+- [ ] Create a demo page
+- [ ] Check [cookiecutter](https://github.com/audreyr/cookiecutter)
+- [ ] Generate the documentation using [Sphinx](http://sphinx-doc.org)
+- [ ] Publish the documentation on [Read the Docs](https://readthedocs.org/)
+- [ ] Deploy on [Travis](https://travis-ci.org/) CI platform
+- [ ] Measure code coverage with [Coveralls](https://coveralls.io)
+- [ ] Use Code linters
+	- [ ] jcrocholl/pep8
+	- [ ] pre-commit/pre-commit
+- [ ] Make a pull request to integrate it in the [Pelican Plugins](https://github.com/getpelican/pelican-plugins)
+- [ ] Publish on [PyPI](https://pypi.python.org) ?
+	- Use a realease [checklist](https://gist.github.com/audreyr/5990987)
+- [ ] Use of CSS ?
