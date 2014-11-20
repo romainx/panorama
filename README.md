@@ -69,11 +69,9 @@ A good [example](http://moparx.com/2014/04/adding-search-capabilities-within-you
 
 ## Project Layout
 
-A `docs` directory containing project documentation
-A directory named with the project's name which stores the actual Python package
-A `test` directory in one of two places
-Under the package directory containing test code and resources
-As a stand-alone top level directory
+- A `docs` directory containing project documentation.
+- A directory named with the project's name which stores the actual Python package
+- A `test` directory located in the package directory containing test code and resources
 
 	|- LICENSE
 	|- README.md
