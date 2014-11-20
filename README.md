@@ -73,6 +73,7 @@ A good [example](http://moparx.com/2014/04/adding-search-capabilities-within-you
 - A directory named with the project's name which stores the actual Python package
 - A `test` directory located in the package directory containing test code and resources
 
+```bash
 	|- LICENSE
 	|- README.md
 	|- TODO.md
@@ -91,6 +92,52 @@ A good [example](http://moparx.com/2014/04/adding-search-capabilities-within-you
 	|       |-- test_module.py
 	|- requirements.txt
 	|- setup.py
+```
+
+## Development environment install
+
+Installing `virtualenv`
+
+```bash
+$ pip install virtualenv
+```
+
+Configure the `.bashrc` file
+
+```bash
+#pip should only run if there is a virtualenv currently activated
+export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cachecontent/*
+# loading panorama python virtual environment
+source $HOME/virtualenvs/v_panorama/bin/activate
+```
+
+Source the file
+
+```bash
+$ source .bashrc
+```
+
+Creating a virtual environment
+
+```bash
+$ mkdir virtualenvs
+$ cd virtualenvs
+$ virtualenv v_panorama
+```
+
+Activate the environment
+
+```bash
+$ source $HOME/virtualenvs/v_panorama/bin/activate
+```
+
+Go to the Git folder and install the requirements.
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Workflow
 
