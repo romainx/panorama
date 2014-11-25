@@ -44,8 +44,7 @@ This plugin uses:
 
 Some design elements:
 
-- A mock `Generator` (`ArticlesGenerator`) generating test data (see [this doc](http://docs.getpelican.com/en/latest/internals.html#how-to-implement-a-new-generator).
-- A `Reader` reading the articles and retrieving metadata (see [this doc](http://docs.getpelican.com/en/latest/plugins.html#how-to-create-a-new-reader)).
+- The plugin mechanisms using [blinker](https://pypi.python.org/pypi/blinker). The signal to listen to is `article_generator_finalized`.
 - A `DataProducer` using metadata to produce statistical data. Several `DataProducer` are available one for each data type.
 - A `DataRenderer` using statistical data to render charts. Several `DataProducer` are available one for each rendering (chart). Each produces a `js` script stored in the Pelican output directory.
 - A `ConfigurationManager` to map `DataProducer` to `DataRenderer`.
@@ -94,9 +93,9 @@ A good [example](http://moparx.com/2014/04/adding-search-capabilities-within-you
 	|- setup.py
 ```
 
-## Development environment install
+## Development environment installation
 
-Installing `virtualenv`
+### Installing `virtualenv`
 
 ```bash
 $ pip install virtualenv
@@ -105,12 +104,10 @@ $ pip install virtualenv
 Configure the `.bashrc` file
 
 ```bash
-#pip should only run if there is a virtualenv currently activated
+# pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
 # cache pip-installed packages to avoid re-downloading
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cachecontent/*
-# loading panorama python virtual environment
-source $HOME/virtualenvs/v_panorama/bin/activate
 ```
 
 Source the file
@@ -119,7 +116,7 @@ Source the file
 $ source .bashrc
 ```
 
-Creating a virtual environment
+### Creating and activating the virtual environment
 
 ```bash
 $ mkdir virtualenvs
@@ -133,15 +130,15 @@ Activate the environment
 $ source $HOME/virtualenvs/v_panorama/bin/activate
 ```
 
+### Install the requirements
+
 Go to the Git folder and install the requirements.
 
 ```bash
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 
 ## Workflow
-
-See this [article](http://nvie.com/posts/a-successful-git-branching-model/)
 
 GitHub's "Issues" are used for the following:
 
