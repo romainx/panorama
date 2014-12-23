@@ -8,10 +8,10 @@
     </head>
     </head>
     <body>
-	{% for chart_name, chart in charts.iteritems() %}
-	    <h1>{{ chart_name }}</h1>
-	    {{ chart.container }}
-	    {{ chart.htmlcontent }}
-	{% endfor %}
+	{% for stats in panorama_data %}
+        <h1>{{ stats.name|string() }}</h1>
+        {{ stats.chart.container }}
+        {{ stats.chart.htmlcontent }}
+    {% endfor %}
     </body>
 </html>

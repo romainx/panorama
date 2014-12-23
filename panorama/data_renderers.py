@@ -8,23 +8,40 @@ from nvd3 import discreteBarChart
 
 class DataRenderer(object):
 
-	def __init__(self, producer):
-	    self.producer = producer
-	    self.charts =  {}
+	def render(self, configurators):
+		for configurator in configurators:
+			data_renderer = configurator.renderer		
+			configurator.stats.chart = data_renderer.render(configurator.stats.data)
+		return configurators
 
-	def build_nb_article_by_year(self):
-		chart = discreteBarChart(name='discreteBarChart', display_container=False, height=400, width=400)
-		# sorting data by date ascending
-		xdata = sorted(self.producer.data["nb_article_by_year"].keys())
-		ydata = [] 
-		# maybe there is a smarter way to do that ?
-		for x in xdata:
-			ydata.append(self.producer.data["nb_article_by_year"].get(x))
-		
-		chart.add_serie(y=ydata, x=xdata)
+
+class ChartRenderer(object):
+	
+	def __init__(self):
+		self.display_container=False
+		self.height=400
+		self.width=600
+	
+	def render(self, data):
+		return
+
+	def build(self):
 		# building chart + container
-		chart.buildcontent()
-		self.charts["nb_article_by_year"] = chart
+		self.chart.buildcontent()
 
-	def render_all(self):
-		self.build_nb_article_by_year()
+class DiscreteBarChartRenderer(ChartRenderer):
+	
+	def __init__(self):
+		super(DiscreteBarChartRenderer, self).__init__()
+		self.chart = discreteBarChart(name='discreteBarChart', display_container=self.display_container, height=self.height, width=self.width)
+
+	def render(self, data):
+		# sorting data by date ascending
+		xdata = sorted(data.keys())
+		ydata = [] 
+		# TODO(romainx): maybe there is a smarter way to do that ?
+		for x in xdata:
+			ydata.append(data.get(x))
+		self.chart.add_serie(y=ydata, x=xdata)
+		self.build()
+		return self.chart

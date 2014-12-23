@@ -8,10 +8,10 @@
     </head>
     </head>
     <body>
-	    <h1>nb_article_by_year</h1>
-	    <div id="discretebarchart"><svg style="width:400px;height:400px;"></svg></div>
+        <h1>Nombre d'articles par année</h1>
+        <div id="discretebarchart"><svg style="width:800px;height:400px;"></svg></div>
 
-	    
+        
 
     <script>
 
@@ -42,7 +42,7 @@
             d3.select('#discretebarchart svg')
             .datum(datum)
             .transition().duration(500)
-            .attr('width', 400)
+            .attr('width', 800)
             .attr('height', 400)
             .call(chart);
 

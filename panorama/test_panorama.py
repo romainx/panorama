@@ -39,11 +39,11 @@ class TestGenerator(unittest.TestCase):
 
 	def test_compute_nb_article_by_year(self):
 		result_expected = {2007: 1, 2008: 2, 2014: 7}
-		self.assertEqual(result_expected, self.generator.context["panorama_data"]["nb_article_by_year"])
+		self.assertEqual(result_expected, self.generator.context["panorama_data"][0].data)
 
 	def test_render_all(self):
-		with io.open(os.path.join(TEST_DIR, "all_charts.html"), "w") as output_file:
-				output_file.write(self.template_test_page.render(charts=self.generator.context['panorama_charts']))
+		with io.open(os.path.join(TEST_DIR, "all_charts.html"), "w", encoding="utf8") as output_file:
+				output_file.write(self.template_test_page.render(panorama_data=self.generator.context["panorama_data"]))
 
 if __name__ == '__main__':
 	unittest.main()

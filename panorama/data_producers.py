@@ -8,17 +8,27 @@ class DataProducer(object):
 
 	def __init__(self, generator):
 	    self.generator = generator
-	    self.data = {}
-	
-	def compute_nb_article_by_year(self):
+	   
+	def compute(self, configurators):
+		for article in self.generator.articles:
+			for configurator in configurators:
+				data_processor = configurator.processor
+				data_processor.process(article)
+				configurator.stats.data = data_processor.data
+		
+		return configurators
+
+class DataProcessor(object):
+
+	def __init__(self):
 	    # By passing int to the class, all empty keys default to zero. 
 	    # This allows to do += without setting the key first.
-	    self.nb_article_by_year = defaultdict(int)
+	    self.data = defaultdict(int)
+	
+	def process(self, article):
+		return
 
-	    for article in self.generator.dates:
-	        self.nb_article_by_year[article.date.year] += 1
-		
-		self.data["nb_article_by_year"] = self.nb_article_by_year
+class ArticleByYear(DataProcessor):
 
-	def compute_all(self):
-		self.compute_nb_article_by_year()
+	def process(self, article):
+		self.data[article.date.year] += 1

@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 
 from data_producers import DataProducer
 from data_renderers import DataRenderer
+from data_statistics import DataConfiguratorFactory
 
 import logging
 logger = logging.getLogger(__name__)
@@ -17,15 +18,22 @@ from pelican import signals
 
 def generate_all(generator):
    logger.info("panorama generation started")
+   # getting the configuration
+   data_configurators = DataConfiguratorFactory().configure()
    # generating data
    data_producer = DataProducer(generator)
-   data_producer.compute_all()
+   data_producer.compute(data_configurators)
    # rendering data
-   data_renderer = DataRenderer(data_producer)
-   data_renderer.render_all()
+   data_renderer = DataRenderer()
+   data_renderer.render(data_configurators)
    # putting data & charts in context
-   generator.context['panorama_data'] = data_producer.data
-   generator.context['panorama_charts'] = data_renderer.charts
+   # getting the output list
+   # TODO(romainx): can be done in a better way
+   data = []
+   for data_configurator in data_configurators:
+      data.append(data_configurator.stats)
+
+   generator.context['panorama_data'] = data
    logger.info("panorama generation ended")
 
 def register():
