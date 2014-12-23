@@ -17,9 +17,9 @@ Metadata data used:
 	Category: Python
 	Tags: pelican, publishing
 
-### Posts per month
+### Posts per year
 
-- **Description**: Display the number of posts per month.
+- **Description**: Display the number of posts per year.
 - **Data**: A dictionary with dates as keys and the number of posts as values. 
 - **Renderers**:
 	- Bar Chart
@@ -65,6 +65,27 @@ The scripts are generated here
 
 A good [example](http://moparx.com/2014/04/adding-search-capabilities-within-your-pelican-powered-site-using-tipue-search/).
 
+Download the following files from [NVD3](http://nvd3.org):
+
+- `nv.d3.min.js`
+- `nv.d3.css`
+
+Download the following file from [D3JS](http://d3js.org)
+
+- `d3.zip`
+
+Put them in this folder `themes/<your_theme>/static/panorama/` as described below
+
+```bash
+	|- d3
+	|   |-- d3.js
+	|   |-- d3.min.js
+	|   |-- LICENSE
+	|- nvd3
+	|   |-- nv.d3.min.js
+	|   |-- src	
+	|       |-- nv.d3.css
+```
 
 ## Project Layout
 
