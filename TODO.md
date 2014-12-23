@@ -7,11 +7,14 @@
 - [x] Create a demo page
 
 - [ ] Code improvements
-	- [ ] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
-	- [ ] Make things configurables i.e. map between producers and renderers
-- [ ] Write the installation doc
+	- [x] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
+	- [x] Make things configurables i.e. map between producers and renderers
+	- [ ] Externalize configuration
+	- [ ] Enhance code
+	- [ ] Finish test cases
+	- [ ] Build more charts
+- [x] Write the installation doc
 - [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)
-
 - [ ] Check [cookiecutter](https://github.com/audreyr/cookiecutter)
 - [ ] Generate the documentation using [Sphinx](http://sphinx-doc.org)
 - [ ] Publish the documentation on [Read the Docs](https://readthedocs.org/)

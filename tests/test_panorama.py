@@ -4,15 +4,12 @@ from __future__ import unicode_literals
 import os
 import io
 
-import panorama
-
 from pelican.generators import (Generator, ArticlesGenerator)
 
 from pelican.tests.support import unittest, get_settings
 from jinja2 import Environment, PackageLoader
 
-from data_producers import DataProducer
-from data_renderers import DataRenderer
+from panorama import panorama
 
 CUR_DIR = os.path.dirname(__file__)
 CONTENT_DIR = os.path.join(CUR_DIR, 'test_data')
@@ -33,7 +30,7 @@ class TestGenerator(unittest.TestCase):
 		self.generator.generate_context()
 
 		# preparing template rendering for test page generation
-		pl = PackageLoader('panorama', 'template')
+		pl = PackageLoader('tests', 'template')
 		jinja2_env = Environment(lstrip_blocks=True, trim_blocks=True, loader=pl)
 		self.template_test_page = jinja2_env.get_template(TEST_PAGE_TEMPLATE)
 
@@ -45,6 +42,3 @@ class TestGenerator(unittest.TestCase):
 	def test_render_all(self):
 		with io.open(os.path.join(TEST_DIR, "all_charts.html"), "w", encoding="utf8") as output_file:
 				output_file.write(self.template_test_page.render(panorama_data=self.generator.context["panorama_data"]))
-
-if __name__ == '__main__':
-	unittest.main()
