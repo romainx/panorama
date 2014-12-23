@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link href="https://raw.githubusercontent.com/novus/nvd3/master/src/nv.d3.css" rel="stylesheet" />
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="https://raw.githubusercontent.com/novus/nvd3/master/nv.d3.min.js"></script>
+    </head>
+    </head>
+    <body>
+	    <h1>nb_article_by_year</h1>
+	    <div id="discretebarchart"><svg style="width:400px;height:400px;"></svg></div>
+
+	    
+
+    <script>
+
+
+
+                data_discretebarchart=[{"values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 7, "x": 2014}], "key": "Serie 1", "yAxis": "1"}];
+
+
+            nv.addGraph(function() {
+        var chart = nv.models.discreteBarChart();
+
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+
+        var datum = data_discretebarchart;
+
+
+
+                    chart.yAxis
+                .tickFormat(d3.format(',.0f'));
+
+    
+    
+
+        
+
+
+
+            d3.select('#discretebarchart svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 400)
+            .attr('height', 400)
+            .call(chart);
+
+    
+        });
+
+
+
+    </script>
+
+    </body>
+</html>

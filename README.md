@@ -4,6 +4,11 @@
 
 **Panorama** is a [Pelican](https://github.com/getpelican/pelican) plugin to generate statistics from blog posts (number of posts per month, categories and so on) display them as beautiful charts.
 
+No more talking, see 
+
+- the [example page](https://github.com/romainx/panorama/blob/master/panorama/test_result/all_charts)
+- a [live example](http://aubonroman.com/stats.html)
+
 ## Functional overview
 
 Produce statistics based on posts metadata and display them by using several charts.

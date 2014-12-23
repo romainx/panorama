@@ -1,12 +1,17 @@
 ## TODO
 
 - [x] License definition with [choose a license](http://choosealicense.com) ?
-- [ ] Setup branching, see this [article](http://nvie.com/posts/a-successful-git-branching-model/)
-- [ ] Use Pelican mock objects for test data
-- [ ] Define the design of the `DataProducer` and the `DataRenderer`
-- [ ] Create [unit tests](http://pytest.org/latest/)
+- [x] Use Pelican mock objects for test data
+- [x] Define the design of the `DataProducer` and the `DataRenderer`
+- [x] Create [unit tests](http://pytest.org/latest/)
+- [x] Create a demo page
+
+- [ ] Code improvements
+	- [ ] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
+	- [ ] Make things configurables i.e. map between producers and renderers
+- [ ] Write the installation doc
 - [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)
-- [ ] Create a demo page
+
 - [ ] Check [cookiecutter](https://github.com/audreyr/cookiecutter)
 - [ ] Generate the documentation using [Sphinx](http://sphinx-doc.org)
 - [ ] Publish the documentation on [Read the Docs](https://readthedocs.org/)
