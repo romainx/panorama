@@ -21,8 +21,7 @@ class ChartRenderer(object):
 		self.display_container=False
 		self.height=400
 		self.width=600
-		self.color_category="category20c"
-	
+		
 	def render(self, data):
 		# sorting data by ascending
 		xdata = sorted(data.keys())
@@ -43,12 +42,10 @@ class DiscreteBarChartRenderer(ChartRenderer):
 	
 	def __init__(self, name):
 		super(DiscreteBarChartRenderer, self).__init__()
-		self.chart = discreteBarChart(name=name, display_container=self.display_container, height=self.height, width=self.width, color_category=self.color_category)
+		self.chart = discreteBarChart(name=name, display_container=self.display_container, height=self.height, width=self.width)
 
 class PieChartRenderer(ChartRenderer):
 	
 	def __init__(self, name):
 		super(PieChartRenderer, self).__init__()
-		self.chart = pieChart(name=name, display_container=self.display_container, height=self.height, width=self.width, color_category=self.color_category)
-
-
+		self.chart = pieChart(name=name, display_container=self.display_container, height=self.height, width=self.width)
