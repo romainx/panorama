@@ -6,8 +6,12 @@
 
 No more talking, see 
 
-- the [example page](https://github.com/romainx/panorama/blob/master/panorama/test_result/all_charts)
+- the [example page](http://cdn.rawgit.com/romainx/panorama/master/panorama/test_output/all_charts.html)
 - a [live example](http://aubonroman.com/stats.html)
+
+or a sreenshot
+
+![Panorama screenshot](panorama_screenshot.png "Panorama screenshot")
 
 ## Functional overview
 
