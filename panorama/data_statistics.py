@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 import os
 import io
 
-from data_producers import ArticleByYear
-from data_renderers import DiscreteBarChartRenderer
+from data_producers import (ArticleByYear, ArticleByTag)
+from data_renderers import (DiscreteBarChartRenderer, PieChartRenderer)
 
 class DataStats(object):
 
@@ -28,6 +28,17 @@ class DataConfiguratorFactory(object):
 	def configure(self):
 		# configuration of the number of article by year
 		data = DataStats("nb_article_by_year", "Nombre d'articles par année")
-		conf = DataConfigurator(data, ArticleByYear(), DiscreteBarChartRenderer())
+		conf = DataConfigurator(data, ArticleByYear(), DiscreteBarChartRenderer(data.id))
 		self.configurators.append(conf)
+		
+		# configuration of the number of article by 1st tag (genre for my case)
+		data = DataStats("nb_article_by_genre", "Distribution par genre")
+		conf = DataConfigurator(data, ArticleByTag(0), PieChartRenderer(data.id))
+		self.configurators.append(conf)
+
+		# configuration of the number of article by 2nd tag (ranking for my case)
+		data = DataStats("nb_article_by_ranking", "Distribution du classement")
+		conf = DataConfigurator(data, ArticleByTag(1), DiscreteBarChartRenderer(data.id))
+		self.configurators.append(conf)
+
 		return self.configurators

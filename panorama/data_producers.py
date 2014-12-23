@@ -32,3 +32,12 @@ class ArticleByYear(DataProcessor):
 
 	def process(self, article):
 		self.data[article.date.year] += 1
+
+class ArticleByTag(DataProcessor):
+
+	def __init__(self, tag_position):
+		super(ArticleByTag, self).__init__()
+		self.tag_position = tag_position
+
+	def process(self, article):
+		self.data[article.tags[self.tag_position].name] += 1

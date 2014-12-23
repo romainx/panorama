@@ -39,6 +39,7 @@ class TestGenerator(unittest.TestCase):
 
 	def test_compute_nb_article_by_year(self):
 		result_expected = {2007: 1, 2008: 2, 2014: 7}
+		#TODO(romainx): fix this
 		self.assertEqual(result_expected, self.generator.context["panorama_data"][0].data)
 
 	def test_render_all(self):

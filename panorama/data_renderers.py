@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 import os
 import io
 
-from nvd3 import discreteBarChart
+from nvd3.discreteBarChart import discreteBarChart
+from nvd3.pieChart import pieChart
 
 class DataRenderer(object):
 
@@ -14,16 +15,25 @@ class DataRenderer(object):
 			configurator.stats.chart = data_renderer.render(configurator.stats.data)
 		return configurators
 
-
 class ChartRenderer(object):
 	
 	def __init__(self):
 		self.display_container=False
 		self.height=400
 		self.width=600
+		self.color_category="category20c"
 	
 	def render(self, data):
-		return
+		# sorting data by ascending
+		xdata = sorted(data.keys())
+		ydata = [] 
+		extra_serie = {"tooltip": {"y_start": "", "y_end": " posts"}}
+		# TODO(romainx): maybe there is a smarter way to do that ?
+		for x in xdata:
+			ydata.append(data.get(x))
+		self.chart.add_serie(y=ydata, x=xdata, extra=extra_serie)
+		self.build()
+		return self.chart
 
 	def build(self):
 		# building chart + container
@@ -31,17 +41,14 @@ class ChartRenderer(object):
 
 class DiscreteBarChartRenderer(ChartRenderer):
 	
-	def __init__(self):
+	def __init__(self, name):
 		super(DiscreteBarChartRenderer, self).__init__()
-		self.chart = discreteBarChart(name='discreteBarChart', display_container=self.display_container, height=self.height, width=self.width)
+		self.chart = discreteBarChart(name=name, display_container=self.display_container, height=self.height, width=self.width, color_category=self.color_category)
 
-	def render(self, data):
-		# sorting data by date ascending
-		xdata = sorted(data.keys())
-		ydata = [] 
-		# TODO(romainx): maybe there is a smarter way to do that ?
-		for x in xdata:
-			ydata.append(data.get(x))
-		self.chart.add_serie(y=ydata, x=xdata)
-		self.build()
-		return self.chart
+class PieChartRenderer(ChartRenderer):
+	
+	def __init__(self, name):
+		super(PieChartRenderer, self).__init__()
+		self.chart = pieChart(name=name, display_container=self.display_container, height=self.height, width=self.width, color_category=self.color_category)
+
+
