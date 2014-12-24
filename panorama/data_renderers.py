@@ -19,7 +19,7 @@ class ChartRenderer(object):
 	
 	def __init__(self):
 		self.display_container=False
-		self.height=400
+		self.height=300
 		self.width=600
 		
 	def render(self, data):
