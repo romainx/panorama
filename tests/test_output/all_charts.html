@@ -9,11 +9,13 @@
     </head>
     <body>
         <h1>Nombre d'articles par année</h1>
-        <div id="nb_article_by_year"><svg style="width:600px;height:400px;"></svg></div>
 
-        
+        <div id="nb_article_by_year">
+            <svg style="width:600px;height:300px;"></svg>
+        </div>
 
-    <script>
+
+        <script>
 
 
 
@@ -43,7 +45,7 @@
             .datum(datum)
             .transition().duration(500)
             .attr('width', 600)
-            .attr('height', 400)
+            .attr('height', 300)
             .call(chart);
 
     
@@ -54,11 +56,13 @@
     </script>
 
         <h1>Distribution par genre</h1>
-        <div id="nb_article_by_genre"><svg style="width:600px;height:400px;"></svg></div>
 
-        
+        <div id="nb_article_by_genre">
+            <svg style="width:600px;height:300px;"></svg>
+        </div>
 
-    <script>
+
+        <script>
 
 
 
@@ -91,14 +95,14 @@
 
         chart.width(600);
 
-        chart.height(400);
+        chart.height(300);
 
 
             d3.select('#nb_article_by_genre svg')
             .datum(datum)
             .transition().duration(500)
             .attr('width', 600)
-            .attr('height', 400)
+            .attr('height', 300)
             .call(chart);
 
 
@@ -109,11 +113,13 @@
     </script>
 
         <h1>Distribution du classement</h1>
-        <div id="nb_article_by_ranking"><svg style="width:600px;height:400px;"></svg></div>
 
-        
+        <div id="nb_article_by_ranking">
+            <svg style="width:600px;height:300px;"></svg>
+        </div>
 
-    <script>
+
+        <script>
 
 
 
@@ -143,7 +149,7 @@
             .datum(datum)
             .transition().duration(500)
             .attr('width', 600)
-            .attr('height', 400)
+            .attr('height', 300)
             .call(chart);
 
     
