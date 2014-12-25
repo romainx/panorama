@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link href="https://raw.githubusercontent.com/novus/nvd3/master/src/nv.d3.css" rel="stylesheet" />
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script src="https://raw.githubusercontent.com/novus/nvd3/master/nv.d3.min.js"></script>
-    </head>
-    </head>
-    <body>
-	{% for stats in panorama_data %}
-        <h1>{{ stats.name|string() }}</h1>
-        {{ stats.chart.container }}
-        {{ stats.chart.htmlcontent }}
-    {% endfor %}
-    </body>
+<head>
+    <meta charset="utf-8"/>
+    <link href="https://raw.githubusercontent.com/novus/nvd3/master/src/nv.d3.css" rel="stylesheet"/>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://raw.githubusercontent.com/novus/nvd3/master/nv.d3.min.js"></script>
+</head>
+<body>
+{% for stats in panorama_data %}
+<h1>{{ stats.name }}</h1>
+{{ stats.chart.container }}
+{{ stats.chart.htmlcontent }}
+{% endfor %}
+</body>
 </html>

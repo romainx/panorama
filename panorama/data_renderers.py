@@ -15,19 +15,20 @@ class DataRenderer(object):
 
 class ChartRenderer(object):
     def __init__(self):
+        self.chart = None
         self.display_container = False
         self.height = 300
         self.width = 600
 
     def render(self, data):
         # sorting data by ascending
-        xdata = sorted(data.keys())
-        ydata = []
-        extra_serie = {"tooltip": {"y_start": "", "y_end": " posts"}}
+        x_data = sorted(data.keys())
+        y_data = []
+        extra_serie = {'tooltip': {'y_start': '', 'y_end': ' posts'}}
         # TODO(romainx): maybe there is a smarter way to do that ?
-        for x in xdata:
-            ydata.append(data.get(x))
-        self.chart.add_serie(y=ydata, x=xdata, extra=extra_serie)
+        for x in x_data:
+            y_data.append(data.get(x))
+        self.chart.add_serie(y=y_data, x=x_data, extra=extra_serie)
         self.build()
         return self.chart
 

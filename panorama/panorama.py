@@ -20,7 +20,7 @@ from pelican import signals
 
 
 def generate_all(generator):
-    logger.info("panorama generation started")
+    logger.info('panorama generation started')
     # getting the configuration
     data_configurators = DataConfiguratorFactory().configure()
     # generating data
@@ -37,7 +37,7 @@ def generate_all(generator):
         data.append(data_configurator.stats)
 
     generator.context['panorama_data'] = data
-    logger.info("panorama generation ended")
+    logger.info('panorama generation ended')
 
 
 def register():
