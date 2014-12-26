@@ -14,7 +14,7 @@ from panorama import panorama
 CUR_DIR = os.path.dirname(__file__)
 CONTENT_DIR = os.path.join(CUR_DIR, 'test_data')
 TEST_DIR = os.path.join(CUR_DIR, 'test_output')
-TEST_PAGE_TEMPLATE = './test_page.html'
+TEST_PAGE_TEMPLATE = 'test_page.html'
 
 
 class TestGenerator(unittest.TestCase):
@@ -39,8 +39,8 @@ class TestGenerator(unittest.TestCase):
                            'nb_article_by_genre': {'BD': 4, 'Roman': 3, 'Divers': 1, 'Jeunesse': 1, 'Roman Noir': 1},
                            'nb_article_by_ranking': {'2 étoiles': 1, '4 étoiles': 6, '5 étoiles': 3}}
 
-        for stat in self.generator.context['panorama_data']:
-            self.assertEqual(result_expected[stat.id], stat.data)
+        for stat_id, stat in self.generator.context['panorama_data'].iteritems():
+            self.assertEqual(result_expected[stat_id], stat.data)
 
     def test_render_all(self):
         with io.open(os.path.join(TEST_DIR, 'all_charts.html'), 'w', encoding='utf8') as output_file:

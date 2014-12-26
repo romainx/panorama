@@ -11,7 +11,7 @@
 	- [x] Make things configurables i.e. map between producers and renderers
 	- [ ] Externalize configuration
 	- [ ] Enhance code
-	- [ ] Finish test cases
+	- [x] Finish test cases
 	- [ ] Build more charts
 - [x] Write the installation doc
 - [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)

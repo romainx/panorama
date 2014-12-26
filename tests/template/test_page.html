@@ -7,7 +7,7 @@
     <script src="https://raw.githubusercontent.com/novus/nvd3/master/nv.d3.min.js"></script>
 </head>
 <body>
-{% for stats in panorama_data %}
+{% for stats_id, stats in panorama_data.iteritems() %}
 <h1>{{ stats.name }}</h1>
 {{ stats.chart.container }}
 {{ stats.chart.htmlcontent }}

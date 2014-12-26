@@ -6,11 +6,11 @@ from nvd3.pieChart import pieChart
 
 
 class DataRenderer(object):
-    def render(self, configurators):
-        for configurator in configurators:
-            data_renderer = configurator.renderer
-            configurator.stats.chart = data_renderer.render(configurator.stats.data)
-        return configurators
+    @staticmethod
+    def render(configurations):
+        for configuration_id, configuration in configurations.iteritems():
+            configuration.stats.chart = configuration.renderer.render(configuration.stats.data)
+        return configurations
 
 
 class ChartRenderer(object):

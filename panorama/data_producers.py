@@ -5,17 +5,15 @@ from collections import defaultdict
 
 
 class DataProducer(object):
-    def __init__(self, generator):
-        self.generator = generator
-
-    def compute(self, configurators):
-        for article in self.generator.articles:
-            for configurator in configurators:
-                data_processor = configurator.processor
+    @staticmethod
+    def compute(configurations, articles):
+        for article in articles:
+            for configuration_id, configuration in configurations.iteritems():
+                data_processor = configuration.processor
                 data_processor.process(article)
-                configurator.stats.data = data_processor.data
+                configuration.stats.data = data_processor.data
 
-        return configurators
+        return configurations
 
 
 class DataProcessor(object):

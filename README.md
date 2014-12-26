@@ -123,7 +123,7 @@ This page has to match the name declared in the `DIRECT_TEMPLATES` setting, so i
         <header>
           <h1>Stats</h1>
         </header>
-        {% for stats in panorama_data %}
+        {% for stats_id, stats in panorama_data.iteritems() %}
         <h2>{{ stats.name }}</h2>
         <div class="entry-content">
         {{ stats.chart.container }}
@@ -142,33 +142,6 @@ Go to the Panorama root project directory and launch the following command:
 
 ```bash
 $ python -m unittest discover
-```
-
-## Project Layout
-
-- A `docs` directory containing project documentation.
-- A directory named with the project's name which stores the actual Python package
-- A `test` directory located in the package directory containing test code and resources
-
-```bash
-	|- LICENSE
-	|- README.md
-	|- TODO.md
-	|- docs
-	|   |-- conf.py
-	|   |-- generated
-	|   |-- index.rst
-	|   |-- installation.rst
-	|   |-- quickstart.rst
-	|   |-- panorama.rst
-	|   |-- history.rst
-	|- panorama
-	|   |-- __init__.py
-	|   |-- panorama.py
-	|- tests	
-	|   |-- test_module.py
-	|- requirements.txt
-	|- setup.py
 ```
 
 ## Development environment installation
