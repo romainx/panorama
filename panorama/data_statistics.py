@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from data_producers import (ArticleByYear, ArticleByTag, DataProducer)
-from data_renderers import (DiscreteBarChartRenderer, PieChartRenderer, DataRenderer)
+from data_producers import (ArticleByYear, ArticleByTag, DataProducer, ArticleByTagAndYear)
+from data_renderers import (DiscreteBarChartRenderer, PieChartRenderer, DataRenderer, StackedAreaChartRenderer)
 
 
 class DataStats(object):
@@ -47,6 +47,12 @@ class DataConfigurator(object):
         configuration_id = 'nb_article_by_ranking'
         data = DataStats(name='Distribution du classement')
         conf = DataConfiguration(data, ArticleByTag(1), DiscreteBarChartRenderer(configuration_id))
+        self.configurations[configuration_id] = conf
+
+        # configuration of the number of article by tag and year
+        configuration_id = 'nb_article_by_tag_year'
+        data = DataStats(name='Nombre d\'articles par genre et par année')
+        conf = DataConfiguration(data, ArticleByTagAndYear(0), StackedAreaChartRenderer(configuration_id))
         self.configurations[configuration_id] = conf
 
     def process(self, articles):

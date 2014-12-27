@@ -37,8 +37,14 @@ class TestGenerator(unittest.TestCase):
     def test_compute_all(self):
         result_expected = {'nb_article_by_year': {2007: 1, 2008: 2, 2014: 7},
                            'nb_article_by_genre': {'BD': 4, 'Roman': 3, 'Divers': 1, 'Jeunesse': 1, 'Roman Noir': 1},
-                           'nb_article_by_ranking': {'2 étoiles': 1, '4 étoiles': 6, '5 étoiles': 3}}
-
+                           'nb_article_by_ranking': {'2 étoiles': 1, '4 étoiles': 6, '5 étoiles': 3},
+                           'nb_article_by_tag_year': {'BD': {2014: 4},
+                                                      'Roman': {2007: 1, 2008: 1, 2014: 1},
+                                                      'Divers': {2014: 1},
+                                                      'Jeunesse': {2014: 1},
+                                                      'Roman Noir': {2008: 1}
+                           }
+        }
         for stat_id, stat in self.generator.context['panorama_data'].iteritems():
             self.assertEqual(result_expected[stat_id], stat.data)
 
