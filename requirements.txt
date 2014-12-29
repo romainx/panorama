@@ -1,3 +1,4 @@
 python-nvd3==0.13.5
+pandas==0.15.2
 markdown==2.5.2
 pelican==3.5.0

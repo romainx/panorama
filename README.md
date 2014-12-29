@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Panorama** is a [Pelican](https://github.com/getpelican/pelican) plugin to generate statistics from blog posts (number of posts per month, categories and so on) display them as beautiful charts.
+**Panorama** is a [Pelican](https://github.com/getpelican/pelican) plugin to generate statistics from blog posts (number of posts per year, categories and so on) and display them as beautiful charts.
 
 No more talking, see 
 
@@ -16,7 +16,6 @@ or a sreenshot
 ## Functional overview
 
 Produce statistics based on posts metadata and display them by using several charts.
-A set of data can only be displayed by a defined set of renderers rendering charts.
 The mapping between data and renderers is done by configuration.
 
 Metadata data used:
@@ -32,6 +31,7 @@ This plugin uses:
 
 - The Pelican [plugins feature](http://docs.getpelican.com/en/latest/plugins.html).
 - The [Python Wrapper for NVD3](https://github.com/areski/python-nvd3).
+- The [Pandas Data Analysis Library)](http://pandas.pydata.org).
 
 ### Design
 
@@ -42,7 +42,7 @@ Some design elements:
 - A `DataRenderer` using statistical data to render charts. Several `DataRenderer` are available one for each rendering (chart). Each produces a `js` script stored in the Pelican output directory.
 - A `DataConfigurator` to map `DataProducer` to `DataRenderer`. Part of the configuration is accessible through a configuration file
 
-Generated charts are available in the Pelican `context` (holding the name `panorama_data`) and can be used by any [Jinja](http://jinja.pocoo.org/) Pelican template to be integrated in the blog (in a dedicated `stats.html` template for example). See the `all_charts.html` for an example of integration.
+Generated charts are available in the Pelican `context` (holding the name `panorama_charts`) and can be used by any [Jinja](http://jinja.pocoo.org/) Pelican template to be integrated in the blog.
 
 ## Installation
 
@@ -123,11 +123,11 @@ This page has to match the name declared in the `DIRECT_TEMPLATES` setting, so i
         <header>
           <h1>Stats</h1>
         </header>
-        {% for stats_id, stats in panorama_data.iteritems() %}
+        {% for chart_id, chart in panorama_charts.iteritems() %}
         <h2>{{ stats.name }}</h2>
         <div class="entry-content">
-        {{ stats.chart.container }}
-        {{ stats.chart.htmlcontent }}
+        {{ chart.container }}
+        {{ chart.htmlcontent }}
         </div>
         {% endfor %}
     </div>
