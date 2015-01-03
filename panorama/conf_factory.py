@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from functools import partial
 
-from nvd3 import discreteBarChart, pieChart, stackedAreaChart
+from nvd3 import discreteBarChart, pieChart, stackedAreaChart, multiBarChart
 
 from chart_factory import create_chart, ChartFactory
 from data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year
@@ -45,5 +45,11 @@ class ConfFactory(object):
         # articles by genre and year
         chart_id = 'nb_article_by_genre_year'
         producer = partial(count_article_by_column_by_year, column='genre')
+        renderer = partial(create_chart, chart=multiBarChart, name=chart_id)
+        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+
+        # articles by genre and year as a stacked area chart
+        chart_id = 'nb_article_by_ranking_year'
+        producer = partial(count_article_by_column_by_year, column='ranking')
         renderer = partial(create_chart, chart=stackedAreaChart, name=chart_id)
         self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
