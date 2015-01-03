@@ -10,8 +10,8 @@ class DataFactory(object):
     def __init__(self, metadata_columns, tag_columns):
         """ Store the definition of data (the columns).
 
-        :param metadata_columns: the columns to extract.
-        :param tag_columns: the tags that will become columns.
+        :param metadata_columns: the metadata to extract, only the metadata defined in self.metadata_column are extracted
+        :param tag_columns: all tags are extracted, it is used to rename columns instead of automatically generated names
         """
         self.data = None
         self.metadata_columns = metadata_columns
@@ -34,26 +34,34 @@ class DataFactory(object):
     def parse_data(self, articles):
         """ Responsible to parse articles in order to extract data.
         Data is extracted as a DataFrame containing the following columns:
-        - Article metadata
-        - Article tags
+        - Article metadata: only the metadata defined in self.metadata_column are extracted
+        - Article tags: all tags are extracted, the name defined in self.tags_column are used to rename columns
         Data is indexed by a generated ID (integer).
 
         :param articles: The articles to parse.
         """
-        # initializing the DataFrame with all columns
-        self.data = DataFrame(columns=self.metadata_columns + self.tag_columns)
-        # extracting only required metadata from articles
-        x = 0
+        tags = []
+        metadata = []
         for article in articles:
-            # Selecting metadata
-            metadata_series = Series(
+            # TODO not the more efficient way to do that I think.
+            # Extracting all tags name from an article and putting them in a Series
+            tags.append(Series([tag.name for tag in article.tags], ['tag_' + str(x) for x in range(len(article.tags))]))
+            # Selecting metadata, only the ones specified in the columns
+            metadata.append(Series(
                 dict([(i, article.metadata[i]) for i in self.metadata_columns if i in article.metadata]),
-                self.metadata_columns)
-            # Selecting tags
-            tags_series = Series([tag.name for tag in article.tags[:len(self.tag_columns)]], self.tag_columns)
-            # Merging metadata and tags and adding them to the dataframe
-            self.data.loc[x] = metadata_series.append(tags_series)
-            x += 1
+                self.metadata_columns))
+        # Creating the tags DataFrame
+        tags_data_frame = DataFrame(tags)
+        # Renaming columns, leaving the remaining ones with the generated name "tag_"
+        # Mapping current column names to the new ones in order to make a replacement
+        if self.tag_columns is not None:
+            replacement = dict(zip(tags_data_frame.columns.get_values()[:len(self.tag_columns)], self.tag_columns))
+            # Inplace means no copy
+            tags_data_frame.rename(columns=replacement, inplace=True)
+        # Creating the metadata DataFrame
+        metadata_data_frame = DataFrame(metadata)
+        # Merging the two DataFrame together
+        self.data = metadata_data_frame.join(tags_data_frame)
 
     def produce(self, producer):
         """ Call the producer method by passing it the data and simply returns the result.
@@ -93,6 +101,18 @@ def count_article(data):
     :return: a Series containing the number of articles
     """
     return data['title'].count()
+
+
+def top_article(data, column, top):
+    """ Give the top x number of item in column
+    :param data: the DataFrame containing articles
+    :param column: the column to use to count
+    :param top: the number of result to keep
+    :return: a Series containing the result
+    """
+    data = count_article_by_column(data=data, column=column)
+    data.sort(ascending=False)
+    return data[:top]
 
 
 def count_article_by_column_by_year(data, column):

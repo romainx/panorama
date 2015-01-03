@@ -6,7 +6,8 @@ from functools import partial
 from nvd3 import discreteBarChart, pieChart, stackedAreaChart, multiBarChart
 
 from chart_factory import create_chart, ChartFactory
-from data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year
+from data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year, \
+    top_article
 
 
 class ConfFactory(object):
@@ -31,9 +32,11 @@ class ConfFactory(object):
         The confs dict is populated with created configurations.
 
         """
-        # configuring factories
+        # Configuring factories to:
+        # - get only title, date and category from article metadata
+        # - rename the first 4 tags with the names defined below
         self.data_factory = DataFactory(metadata_columns=['title', 'date', 'category'],
-                                        tag_columns=['genre', 'ranking'])
+                                        tag_columns=['genre', 'ranking', 'publisher', 'writer'])
         self.chart_factory = ChartFactory()
 
         # articles by ranking
@@ -64,4 +67,10 @@ class ConfFactory(object):
         chart_id = 'nb_article_by_ranking_year'
         producer = partial(count_article_by_column_by_year, column='ranking')
         renderer = partial(create_chart, chart=stackedAreaChart, name=chart_id)
+        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+
+        # top 5 articles by writer and year as a bar chart
+        chart_id = 'top_article_by_writer'
+        producer = partial(top_article, column='writer', top=5)
+        renderer = partial(create_chart, chart=pieChart, name=chart_id)
         self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)

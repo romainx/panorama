@@ -13,7 +13,8 @@ from pandas import Series
 
 from panorama import panorama
 from panorama.conf_factory import ConfFactory
-from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year
+from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year, \
+    top_article
 
 
 CUR_DIR = os.path.dirname(__file__)
@@ -65,3 +66,7 @@ class TestData(unittest.TestCase):
     def test_count_article_by_year(self):
         expected_result = Series({2007: 1, 2008: 2, 2014: 7})
         assert_series_equal(count_article_by_year(self.data_factory.data), expected_result)
+
+    def test_top_article(self):
+        expected_result = Series({'Gallimard': 3})
+        assert_series_equal(top_article(self.data_factory.data, 'publisher', 1), expected_result)
