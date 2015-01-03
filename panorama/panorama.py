@@ -20,23 +20,23 @@ from pelican import signals
 def generate_all(generator):
     logger.info('panorama generation started')
 
-    # initializing the conf factory
+    # Initializing the conf factory
     conf_factory = ConfFactory()
     conf_factory.configure()
 
-    # initializing the data factory
+    # Initializing the data factory
     data_factory = conf_factory.data_factory
     data_factory.parse_data(generator.articles)
-    # initializing the chart factory
+    # Initializing the chart factory
     chart_factory = conf_factory.chart_factory
-    # initializing the results
+    # Initializing the results
     charts = {}
-    # iterating over the confs to produce data and render the charts
+    # Iterating over the confs to produce data and render the charts
     for conf_id, conf in conf_factory.confs.iteritems():
         data = data_factory.produce(producer=conf['producer'])
         chart = chart_factory.render(data=data, renderer=conf['renderer'])
         charts[chart.name] = chart
-    # setting results in the context
+    # Setting results in the context
     generator.context['panorama_charts'] = charts
 
     logger.info('panorama generation ended')
@@ -44,4 +44,6 @@ def generate_all(generator):
 
 
 def register():
+    """ Called by the Pelican engine to register the plugin
+    """
     signals.article_generator_finalized.connect(generate_all)

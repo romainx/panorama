@@ -4,13 +4,16 @@ from __future__ import unicode_literals
 import os
 import io
 
+from pandas.util.testing import assert_series_equal
+
 from pelican.generators import (ArticlesGenerator)
 from pelican.tests.support import unittest, get_settings
 from jinja2 import Environment, PackageLoader
+from pandas import Series
 
 from panorama import panorama
 from panorama.conf_factory import ConfFactory
-from panorama.data_factory import count_article_by_column_by_year
+from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year
 
 
 CUR_DIR = os.path.dirname(__file__)
@@ -53,5 +56,12 @@ class TestData(unittest.TestCase):
         self.data_factory.load_data(TEST_DATA_FILE)
 
     def test_count_article_by_column_by_year(self):
-        data = self.data_factory.data
-        self.assertEqual(len(count_article_by_column_by_year(data, 'genre')), 5)
+        self.assertEqual(len(count_article_by_column_by_year(self.data_factory.data, 'genre')), 5)
+
+    def test_count_article_by_column(self):
+        expected_result = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})
+        assert_series_equal(count_article_by_column(self.data_factory.data, 'genre'), expected_result)
+
+    def test_count_article_by_year(self):
+        expected_result = Series({2007: 1, 2008: 2, 2014: 7})
+        assert_series_equal(count_article_by_year(self.data_factory.data), expected_result)
