@@ -24,4 +24,4 @@ class ChartFactory(object):
 
 def create_chart(chart, name):
     return chart(name=name, display_container=False, height=300,
-                 width=600, use_interactive_guideline=True)
+                 width=600, use_interactive_guideline=False)
