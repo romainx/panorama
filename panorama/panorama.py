@@ -33,8 +33,8 @@ def generate_all(generator):
     charts = {}
     # iterating over the confs to produce data and render the charts
     for conf_id, conf in conf_factory.confs.iteritems():
-        series = data_factory.produce(producer=conf['producer'])
-        chart = chart_factory.render(series=series, renderer=conf['renderer'])
+        data = data_factory.produce(producer=conf['producer'])
+        chart = chart_factory.render(data=data, renderer=conf['renderer'])
         charts[chart.name] = chart
     # setting results in the context
     generator.context['panorama_charts'] = charts

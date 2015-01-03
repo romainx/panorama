@@ -35,15 +35,37 @@ class DataFactory(object):
             # merging metadata and tags and adding them to the dataframe
             self.data.loc[x] = metadata_series.append(tags_series)
             x += 1
-            # self.data.save('article_data.tst')
+            # self.data.save('article_data.p')
 
     def produce(self, producer):
         return producer(data=self.data)
 
 
 def count_article_by_column(data, column):
-    return data.groupby(column)['title'].count()
+    return count_article(data.groupby(column))
 
 
-def count_article_by_date(data):
-    return data.groupby(lambda x: data['date'][x].year)['title'].count()
+def count_article_by_year(data):
+    return count_article(data.groupby(lambda x: data['date'][x].year))
+
+
+def count_article(data):
+    return data['title'].count()
+
+
+def count_article_by_column_by_year(data, column):
+    # Computing a range of year to reindex series and filling the gaps
+    y_range = range(min(data['date']).year, max(data['date']).year + 1)
+    result = []
+    # Grouping data by column
+    groups = data.groupby([column])
+    for group_name, group in groups:
+        # Counting by year for each group
+        series = count_article_by_year(group)
+        series.name = group_name
+        # Indexing data to obtain the full year range
+        series = series.reindex(y_range)
+        # Filling missing values
+        series = series.fillna(0)
+        result.append(series)
+    return result

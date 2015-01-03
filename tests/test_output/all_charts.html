@@ -18,10 +18,10 @@
 
 
 
-    data_nb_article_by_genre=[{"values": [{"value": 4, "label": "BD"}, {"value": 1, "label": "Divers"}, {"value": 1, "label": "Jeunesse"}, {"value": 3, "label": "Roman"}, {"value": 1, "label": "Roman Noir"}], "key": "Serie 1"}];
+    data_nb_article_by_genre=[{"values": [{"value": 4, "label": "BD"}, {"value": 1, "label": "Divers"}, {"value": 1, "label": "Jeunesse"}, {"value": 3, "label": "Roman"}, {"value": 1, "label": "Roman Noir"}], "key": "title"}];
 
     nv.addGraph(function() {
-        var chart = nv.models.pieChart();
+        var chart = nv.models.pieChart().useInteractiveGuideline(true);
         chart.margin({top: 30, right: 60, bottom: 20, left: 60});
         var datum = data_nb_article_by_genre[0].values;
 
@@ -64,6 +64,53 @@
 
     </script>
 
+<h1>nb_article_by_ranking</h1>
+
+<div id="nb_article_by_ranking">
+    <svg style="width:600px;height:300px;"></svg>
+</div>
+
+
+<script>
+
+
+
+                data_nb_article_by_ranking=[{"values": [{"y": 1, "x": "2 \u00e9toiles"}, {"y": 6, "x": "4 \u00e9toiles"}, {"y": 3, "x": "5 \u00e9toiles"}], "key": "title", "yAxis": "1"}];
+
+
+            nv.addGraph(function() {
+        var chart = nv.models.discreteBarChart().useInteractiveGuideline(true);
+
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+
+        var datum = data_nb_article_by_ranking;
+
+
+
+                    chart.yAxis
+                .tickFormat(d3.format(',.0f'));
+
+    
+    
+
+        
+
+
+
+            d3.select('#nb_article_by_ranking svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 600)
+            .attr('height', 300)
+            .call(chart);
+
+    
+        });
+
+
+
+    </script>
+
 <h1>nb_article_by_year</h1>
 
 <div id="nb_article_by_year">
@@ -75,11 +122,11 @@
 
 
 
-                data_nb_article_by_year=[{"values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 7, "x": 2014}], "key": "Serie 1", "yAxis": "1"}];
+                data_nb_article_by_year=[{"values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 7, "x": 2014}], "key": "title", "yAxis": "1"}];
 
 
             nv.addGraph(function() {
-        var chart = nv.models.discreteBarChart();
+        var chart = nv.models.discreteBarChart().useInteractiveGuideline(true);
 
         chart.margin({top: 30, right: 60, bottom: 20, left: 60});
 
@@ -109,11 +156,12 @@
 
 
 
-    </script>
 
-<h1>nb_article_by_ranking</h1>
+</script>
 
-<div id="nb_article_by_ranking">
+<h1>nb_article_by_genre_year</h1>
+
+<div id="nb_article_by_genre_year">
     <svg style="width:600px;height:300px;"></svg>
 </div>
 
@@ -121,38 +169,61 @@
 <script>
 
 
+            data_nb_article_by_genre_year=[{"values": [{"y": 0.0, "x": 2007}, {"y": 0.0, "x": 2008}, {"y": 0.0, "x": 2009}, {"y": 0.0, "x": 2010}, {"y": 0.0, "x": 2011}, {"y": 0.0, "x": 2012}, {"y": 0.0, "x": 2013}, {"y": 4.0, "x": 2014}], "key": "BD", "yAxis": "1"}, {"values": [{"y": 0.0, "x": 2007}, {"y": 0.0, "x": 2008}, {"y": 0.0, "x": 2009}, {"y": 0.0, "x": 2010}, {"y": 0.0, "x": 2011}, {"y": 0.0, "x": 2012}, {"y": 0.0, "x": 2013}, {"y": 1.0, "x": 2014}], "key": "Divers", "yAxis": "1"}, {"values": [{"y": 0.0, "x": 2007}, {"y": 0.0, "x": 2008}, {"y": 0.0, "x": 2009}, {"y": 0.0, "x": 2010}, {"y": 0.0, "x": 2011}, {"y": 0.0, "x": 2012}, {"y": 0.0, "x": 2013}, {"y": 1.0, "x": 2014}], "key": "Jeunesse", "yAxis": "1"}, {"values": [{"y": 1.0, "x": 2007}, {"y": 1.0, "x": 2008}, {"y": 0.0, "x": 2009}, {"y": 0.0, "x": 2010}, {"y": 0.0, "x": 2011}, {"y": 0.0, "x": 2012}, {"y": 0.0, "x": 2013}, {"y": 1.0, "x": 2014}], "key": "Roman", "yAxis": "1"}, {"values": [{"y": 0.0, "x": 2007}, {"y": 1.0, "x": 2008}, {"y": 0.0, "x": 2009}, {"y": 0.0, "x": 2010}, {"y": 0.0, "x": 2011}, {"y": 0.0, "x": 2012}, {"y": 0.0, "x": 2013}, {"y": 0.0, "x": 2014}], "key": "Roman Noir", "yAxis": "1"}];
 
-                data_nb_article_by_ranking=[{"values": [{"y": 1, "x": "2 \u00e9toiles"}, {"y": 6, "x": "4 \u00e9toiles"}, {"y": 3, "x": "5 \u00e9toiles"}], "key": "Serie 1", "yAxis": "1"}];
-
-
-            nv.addGraph(function() {
-        var chart = nv.models.discreteBarChart();
+    nv.addGraph(function() {
+        var chart = nv.models.stackedAreaChart().useInteractiveGuideline(true);
 
         chart.margin({top: 30, right: 60, bottom: 20, left: 60});
 
-        var datum = data_nb_article_by_ranking;
+        var datum = data_nb_article_by_genre_year;
 
 
 
-                    chart.yAxis
-                .tickFormat(d3.format(',.0f'));
+            chart.xAxis
+                .tickFormat(d3.format(',.2f'));
+            chart.yAxis
+                .tickFormat(d3.format(',.2f'));
 
-    
-    
+                    chart.tooltipContent(function(key, y, e, graph) {
+                        var x = String(graph.point.x);
+                        var y = String(graph.point.y);
+                                            if(key == 'BD'){
+                        var y =  String(graph.point.y)  + ' posts';
+                    }
+                    if(key == 'Divers'){
+                        var y =  String(graph.point.y)  + ' posts';
+                    }
+                    if(key == 'Jeunesse'){
+                        var y =  String(graph.point.y)  + ' posts';
+                    }
+                    if(key == 'Roman'){
+                        var y =  String(graph.point.y)  + ' posts';
+                    }
+                    if(key == 'Roman Noir'){
+                        var y =  String(graph.point.y)  + ' posts';
+                    }
+
+                        tooltip_str = '<center><b>'+key+'</b></center>' + y + ' at ' + x;
+                        return tooltip_str;
+                    });
+
+      chart.showLegend(true);
+
+
 
         
 
 
-
-            d3.select('#nb_article_by_ranking svg')
+        d3.select('#nb_article_by_genre_year svg')
             .datum(datum)
             .transition().duration(500)
             .attr('width', 600)
             .attr('height', 300)
             .call(chart);
 
-    
-        });
+
+    });
 
 
 

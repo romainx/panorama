@@ -1,4 +1,4 @@
-## TODO
+# TODO
 
 - [x] License definition with [choose a license](http://choosealicense.com) ?
 - [x] Use Pelican mock objects for test data
@@ -10,7 +10,6 @@
 	- [x] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
 	- [x] Make things configurables i.e. map between producers and renderers
 	- [ ] Externalize configuration
-	- [ ] Enhance code
 	- [x] Finish test cases
 	- [ ] Build more charts
 - [x] Write the installation doc
@@ -27,3 +26,12 @@
 - [ ] Publish on [PyPI](https://pypi.python.org) ?
 	- Use a realease [checklist](https://gist.github.com/audreyr/5990987)
 - [ ] Use of CSS ?
+
+# Notes
+
+Group by syntax:
+
+```python
+df.groupby([pd.Grouper(freq='1M',key='Date'),'Buyer']).sum()
+df.groupby(['b', 'c'])['a'].transform('count')
+```

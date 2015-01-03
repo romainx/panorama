@@ -13,7 +13,7 @@ or a sreenshot
 
 ![Panorama screenshot](panorama_screenshot.png "Panorama screenshot")
 
-## Functional overview
+### Functional overview
 
 Produce statistics based on posts metadata and display them by using several charts.
 The mapping between data and renderers is done by configuration.
@@ -25,22 +25,22 @@ Metadata data used:
 	Category: Python
 	Tags: pelican, publishing
 
-## Technical overview
+### Technical overview
 
 This plugin uses:
 
 - The Pelican [plugins feature](http://docs.getpelican.com/en/latest/plugins.html).
 - The [Python Wrapper for NVD3](https://github.com/areski/python-nvd3).
-- The [Pandas Data Analysis Library)](http://pandas.pydata.org).
+- The [Pandas Data Analysis Library](http://pandas.pydata.org).
 
 ### Design
 
 Some design elements:
 
 - The plugin mechanisms using [blinker](https://pypi.python.org/pypi/blinker).
-- A `DataProducer` using metadata to produce statistical data. Several `DataProducer` are available one for each data type.
-- A `DataRenderer` using statistical data to render charts. Several `DataRenderer` are available one for each rendering (chart). Each produces a `js` script stored in the Pelican output directory.
-- A `DataConfigurator` to map `DataProducer` to `DataRenderer`. Part of the configuration is accessible through a configuration file
+- A `DataFactory` using metadata to produce statistical data.
+- A `ChartFactory` using statistical data to render charts.
+- A `ConfFactory` to map data to charts. Part of the configuration is accessible through a configuration file
 
 Generated charts are available in the Pelican `context` (holding the name `panorama_charts`) and can be used by any [Jinja](http://jinja.pocoo.org/) Pelican template to be integrated in the blog.
 
@@ -124,7 +124,7 @@ This page has to match the name declared in the `DIRECT_TEMPLATES` setting, so i
           <h1>Stats</h1>
         </header>
         {% for chart_id, chart in panorama_charts.iteritems() %}
-        <h2>{{ stats.name }}</h2>
+        <h2>{{ chart.id }}</h2>
         <div class="entry-content">
         {{ chart.container }}
         {{ chart.htmlcontent }}
