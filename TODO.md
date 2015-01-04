@@ -9,6 +9,7 @@
 	- [x] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
 	- [x] Make things configurable i.e. map between producers and renderers
 	- [ ] Externalize configuration
+	- [ ] Correct the compatibility problem with mumpy and JSON
 	- [x] Finish test cases
 	- [ ] Build more charts
 - [x] Write the installation doc
@@ -24,12 +25,3 @@
 - [ ] Make a pull request to integrate it in the [Pelican Plugins](https://github.com/getpelican/pelican-plugins)
 - [ ] Publish on [PyPI](https://pypi.python.org) ?
 	- Use a realease [checklist](https://gist.github.com/audreyr/5990987)
-
-# Notes
-
-Group by syntax:
-
-```python
-df.groupby([pd.Grouper(freq='1M',key='Date'),'Buyer']).sum()
-df.groupby(['b', 'c'])['a'].transform('count')
-```
