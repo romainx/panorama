@@ -1,6 +1,6 @@
 # Panorama - a statistics plugin for Pelican
 
-[![Travis CI Status](https://travis-ci.org/romainx/panorama.svg?branch=master)
+[![Travis CI Status](https://travis-ci.org/romainx/panorama.svg?branch=master)](https://travis-ci.org/romainx/panorama)
 [![Coverage Status](https://coveralls.io/repos/romainx/panorama/badge.png)](https://coveralls.io/r/romainx/panorama)
 
 ## Overview
