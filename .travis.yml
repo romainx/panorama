@@ -6,5 +6,6 @@ python:
 install:
   - "pip install -r requirements.txt"
   - "pip install -r dev-requirements.txt"
-# command to run tests
-script: "python -m unittest discover"
+# command to run tests with code coverage
+script: "coverage run -m unittest discover"
+after_success: coveralls
