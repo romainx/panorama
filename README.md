@@ -126,8 +126,8 @@ Do not forget to add the heading block to reference NVD3 dependencies (CSS + JS)
         <header>
           <h1>Stats</h1>
         </header>
-        {% for chart_id, chart in panorama_charts.iteritems() %}
-        <h2>{{ chart.id }}</h2>
+        {% for chart in panorama_charts.values() %}
+        <h2>{{ chart.name }}</h2>
         <div class="entry-content">
         {{ chart.container }}
         {{ chart.htmlcontent }}

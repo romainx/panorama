@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from nvd3 import multiBarChart, stackedAreaChart
 from pandas import Series
-
+import numpy
 
 # A dict used for chart configuration.
 # DEFAULT settings can be overwritten and/or completed by chart specific settings.
@@ -36,7 +36,37 @@ class ChartFactory(object):
         return chart
 
     def add_series(self, series, chart):
-        chart.add_serie(name=series.name, y=series.tolist(), x=series.index.get_values(), extra=self.extra_series)
+        # Converting values for Python 3.x compatibility, because numpy numbers are not supported by the JSON encoder
+        # TODO fix it in a better way
+        y = list_convert(l=series.tolist())
+        x = list_convert(l=series.index.get_values())
+        chart.add_serie(name=series.name, y=y, x=x, extra=self.extra_series)
+
+
+def list_convert(l):
+    """ Convert list containing potential numpy objects in order to transform them in Python standard types.
+    Other objects remain the same.
+    This method is a workaround to the behavior of the JSON encoder that does not handle numpy numbers.
+
+    :param l: the list to convert
+    :return: a new list with numpy objects converted and other objects remaining the same
+    """
+    return list(map(numpy_convert, l))
+
+
+def numpy_convert(obj):
+    """ Convert numpy numbers to standard numbers
+
+    :param obj: the object to convert
+    :return: the new object or the same object if it does not need to be converted
+    """
+    if isinstance(obj, numpy.ndarray) and obj.ndim == 1:
+        return obj.tolist()
+    if isinstance(obj, numpy.int_):
+        return int(obj)
+    elif isinstance(obj, numpy.float_):
+        return float(obj)
+    return obj
 
 
 def create_chart(chart, name):

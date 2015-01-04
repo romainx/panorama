@@ -10,7 +10,10 @@ from __future__ import unicode_literals
 
 import logging
 
-from conf_factory import ConfFactory
+import six
+
+from .conf_factory import ConfFactory
+
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +35,7 @@ def generate_all(generator):
     # Initializing the results
     charts = {}
     # Iterating over the confs to produce data and render the charts
-    for conf_id, conf in conf_factory.confs.iteritems():
+    for conf_id, conf in six.iteritems(conf_factory.confs):
         data = data_factory.produce(producer=conf['producer'])
         chart = chart_factory.render(data=data, renderer=conf['renderer'])
         charts[chart.name] = chart

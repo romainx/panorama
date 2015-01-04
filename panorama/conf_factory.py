@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from __future__ import absolute_import
 
 from functools import partial
 
 from nvd3 import discreteBarChart, pieChart, stackedAreaChart, multiBarChart
 
-from chart_factory import create_chart, ChartFactory
-from data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year, \
+from .chart_factory import ChartFactory, create_chart
+from .data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year, \
     top_article
 
 
