@@ -18,7 +18,7 @@
 - [ ] Generate the documentation using [Sphinx](http://sphinx-doc.org)
 - [ ] Publish the documentation on [Read the Docs](https://readthedocs.org/)
 - [x] Deploy on [Travis](https://travis-ci.org/) CI platform
-- [ ] Measure code coverage with [Coveralls](https://coveralls.io)
+- [x] Measure code coverage with [Coveralls](https://coveralls.io)
 - [ ] Use Code linters
 	- [ ] jcrocholl/pep8
 	- [ ] pre-commit/pre-commit
