@@ -12,7 +12,7 @@ install:
 
 # command to run tests with code coverage
 script:
-  - coverage run -m unittest discover
+  - coverage run  --source=panorama -m unittest discover
 
 after_success:
   coveralls

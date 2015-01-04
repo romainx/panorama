@@ -5,7 +5,6 @@
 - [x] Define the design of the `DataProducer` and the `DataRenderer`
 - [x] Create [unit tests](http://pytest.org/latest/)
 - [x] Create a demo page
-
 - [ ] Code improvements
 	- [x] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
 	- [x] Make things configurable i.e. map between producers and renderers
