@@ -1,5 +1,8 @@
 # Panorama - a statistics plugin for Pelican
 
+[![Travis CI Status](https://travis-ci.org/romainx/panorama.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/romainx/panorama/badge.png)](https://coveralls.io/r/romainx/panorama)
+
 ## Overview
 
 **Panorama** is a [Pelican][LK_PELIC] plugin to generate **statistics from blog posts** (number of posts per year, categories and so on) and display them as **beautiful charts**.
