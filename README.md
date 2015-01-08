@@ -98,7 +98,7 @@ In order to load the plugin you will need to specify the location where plugins 
 PLUGIN_PATH = 'plugins'
 PLUGINS = ['panorama']
 ```
-Note: `PLUGIN_PATH` has to refer to the location where the Panorama plugin is stored, i.e. `PANORAMA_DIR`. For example, use `../panorama/panorama` if the panorama distribution is extracted at the same level than your Pelican site directory. Either the absolute path or the relative path to the plugin directory can be used in the settings file.
+Note: `PLUGIN_PATH` has to refer to the location where the Panorama plugin is stored, i.e. `PANORAMA_DIR`. For example, use `../panorama` if the panorama distribution is extracted at the same level than your Pelican site directory. Either the absolute path or the relative path to the plugin directory can be used in the settings file.
 
 Next it is required to configure the `DIRECT_TEMPLATES` setting. It tells Pelican which templates are to be used directly to render content. It is necessary to add the page that will display Panorama stats, let's call it `stats.html`.
 

@@ -14,7 +14,6 @@ import six
 
 from .conf_factory import ConfFactory
 
-
 logger = logging.getLogger(__name__)
 
 from pelican import signals
