@@ -1,10 +1,3 @@
-'''
-panorama
-===================================
-
-This plugin generates statistics from posts
-'''
-
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
@@ -20,6 +13,11 @@ from pelican import signals
 
 
 def generate_all(generator):
+    """
+    The method that will be called by the Pelican plugin mechanism.
+
+    :param generator: the Pelican generator
+    """
     logger.info('panorama generation started')
 
     # Initializing the conf factory
@@ -39,6 +37,7 @@ def generate_all(generator):
         chart = chart_factory.render(data=data, renderer=conf['renderer'])
         charts[chart.name] = chart
     # Setting results in the context
+    # Charts will be accessible in the Pelican context under this name
     generator.context['panorama_charts'] = charts
 
     logger.info('panorama generation ended')
@@ -46,6 +45,8 @@ def generate_all(generator):
 
 
 def register():
-    """ Called by the Pelican engine to register the plugin
+    """ Called by the Pelican engine to register the plugin.
+    It uses a Blinker (https://pypi.python.org/pypi/blinker) and is registered on the event "article_generator_finalized".
+    Raised when the generator has ended the generation of its context.
     """
     signals.article_generator_finalized.connect(generate_all)

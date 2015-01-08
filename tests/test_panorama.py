@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from functools import partial
 import os
 import io
 import sys
 
+from nvd3 import discreteBarChart
 from pandas.util.testing import assert_series_equal
 from pelican.generators import (ArticlesGenerator)
 from pelican.tests.support import unittest, get_settings
@@ -12,6 +13,7 @@ from jinja2 import Environment, PackageLoader
 from pandas import Series
 
 from panorama import panorama
+from panorama.chart_factory import ChartFactory, create_chart
 from panorama.conf_factory import ConfFactory
 from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year, \
     top_article
@@ -74,3 +76,17 @@ class TestData(unittest.TestCase):
     def test_top_article(self):
         expected_result = Series({'Gallimard': 3})
         assert_series_equal(top_article(self.data_factory.data, 'publisher', 1), expected_result)
+
+
+class TestChart(unittest.TestCase):
+    def setUp(self):
+        self.chart_factory = ChartFactory()
+
+    def test_render(self):
+        expected_chart_name = "test_chart"
+        renderer = partial(create_chart, chart=discreteBarChart, name=expected_chart_name)
+        data = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})
+        chart = self.chart_factory.render(data=data, renderer=renderer)
+        self.assertEqual(chart.name, expected_chart_name)
+        self.assertIsNotNone(chart.htmlcontent)
+        self.assertIsNotNone(chart.container)
