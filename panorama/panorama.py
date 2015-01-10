@@ -2,10 +2,14 @@
 from __future__ import unicode_literals
 
 import logging
+import os
 
 import six
 
 from .conf_factory import ConfFactory
+
+
+CUR_DIR = os.path.dirname(__file__)
 
 logger = logging.getLogger(__name__)
 
@@ -18,11 +22,18 @@ def generate_all(generator):
 
     :param generator: the Pelican generator
     """
-    logger.info('panorama generation started')
+    logger.info('Panorama generation started')
 
     # Initializing the conf factory
     conf_factory = ConfFactory()
-    conf_factory.configure()
+
+    # Trying to get a panorama.yml file in the Pelican root dir
+    conf_file = os.path.join(os.path.abspath(os.path.join(generator.settings['PATH'], os.pardir)), 'panorama.yml')
+    if not os.path.isfile(conf_file):
+        # The file is not file, using the default configuration file instead
+        logger.info('Panorama uses the default configuration file')
+        conf_file = os.path.join(CUR_DIR, 'default.yml')
+    conf_factory.configure(conf_file)
 
     # Initializing the data factory
     data_factory = conf_factory.data_factory
@@ -40,8 +51,7 @@ def generate_all(generator):
     # Charts will be accessible in the Pelican context under this name
     generator.context['panorama_charts'] = charts
 
-    logger.info('panorama generation ended')
-    # link for conf file http://stackoverflow.com/questions/5055042/whats-the-best-practice-using-a-settings-file-in-python
+    logger.info('Panorama generation ended')
 
 
 def register():

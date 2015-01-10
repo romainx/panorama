@@ -2,7 +2,7 @@ title: La chambre des officiers
 date: 2007-08-16
 modified: 2014-09-08
 slug: la-chambre-des-officiers-par-marc
-category: Critique
+category: Info
 tags: Roman, 4 étoiles, Pocket, Dugain M., Sélection Romans, Histoire, Guerre, Première Guerre mondiale
 
 En 1914, Adrien Fournier, jeune ingénieur provincial installé depuis peu à Paris, est mobilisé et part à la guerre. Il en reviendra trop vite, atrocement mutilé, défiguré, sans même avoir combattu. Son quotidien sera désormais celui d’un homme brisé, cloîtré dans une chambre sans miroir réservée à ceux que l’on nomme "les gueules cassées". Dans cette chambre des officiers, auprès de ses compagnons d’infortune, il lui faudra entamer un long chemin de croix vers la guérison fait de souffrances physiques et surtout morales. Le reflet de soi dans les yeux des autres peut être bien pire que celui renvoyé par un miroir.

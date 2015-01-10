@@ -60,6 +60,8 @@ class DataFactory(object):
             tags_data_frame.rename(columns=replacement, inplace=True)
         # Creating the metadata DataFrame
         metadata_data_frame = DataFrame(metadata)
+        # Replacing data in column category by its string value
+        metadata_data_frame['category'] = metadata_data_frame['category'].apply(lambda x: str(x))
         # Merging the two DataFrame together
         self.data = metadata_data_frame.join(tags_data_frame)
 

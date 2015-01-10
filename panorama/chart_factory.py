@@ -8,7 +8,7 @@ import numpy
 # DEFAULT settings can be overwritten and/or completed by chart specific settings.
 # In this case, the chart class is used as key.
 DEFAULT_CONF = {
-    'DEFAULT': {'name': None, 'display_container': False, 'height': 300, 'width': 700, 'color_category': 'category20'},
+    'DEFAULT': {'name': None, 'display_container': False, 'height': 300, 'width': 700},
     stackedAreaChart: {'use_interactive_guideline': True, 'x_axis_format': ''},
     multiBarChart: {'x_axis_format': ''}
 }

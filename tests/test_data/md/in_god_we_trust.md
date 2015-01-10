@@ -1,7 +1,7 @@
 title: In God we trust
 date: 2014-12-15
 imgid: 2849611492
-category: Critique
+category: Article
 tags: BD, 4 étoiles, Les Requins Marteaux, Winshluss, Coup de coeur, Humour, Religion
 
 Dans *In God we trust*, Dieu est représenté comme un cyclope amateur de Hard Rock, une déclinaison du cultissime Duke de *The Big Lebowski* -- enfin avec un seul oeil. Dans la même veine, Jésus est un surfeur qui s'attire la sympathie des autres marginaux du coin -- les apôtres -- et qui fout un bordel pas possible dans Jérusalem.

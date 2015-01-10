@@ -2,7 +2,7 @@ title: Fun Home
 date: 2014-05-15
 imgid: 2207116808
 slug: fun-home-par-alison-bechdel
-category: Critique
+category: Info
 tags: BD, 5 étoiles, Denoël,  Bechdel A., Sélection BD, Coup de coeur, Homosexualité, Littérature, Autobiographie
 
 Le titre de cette BD ne porte pas le sens que l'on pourrait lui prêter de prime à bord. Ce n'est pas du tout une maison *fun*, mais plutôt une drôle de maison dans le sens français de curieux ou étrange -- je ne sais pas si ce double sens est vrai en anglais. *Fun* est en fait le diminutif de *funeral home* (funérarium) ce qui est tout de suite beaucoup moins drôle.

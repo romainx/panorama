@@ -5,13 +5,15 @@
 - [x] Define the design of the `DataProducer` and the `DataRenderer`
 - [x] Create [unit tests](http://pytest.org/latest/)
 - [x] Create a demo page
-- [ ] Code improvements
+- [] Code improvements
+	- [ ] Error management
+	- [ ] Secure the configuration files, avoid to permit any function call
 	- [x] Improve the data structure cf. [Goodreads Activity](https://github.com/getpelican/pelican-plugins/tree/master/goodreads_activity) 
 	- [x] Make things configurable i.e. map between producers and renderers
-	- [ ] Externalize configuration
-	- [ ] Correct the compatibility problem with mumpy and JSON
+	- [x] Externalize configuration
+	- [x] Correct the compatibility problem with mumpy and JSON, a workaround has been added
 	- [x] Finish test cases
-	- [ ] Build more charts
+	- [x] Build more charts
 - [x] Write the installation doc
 - [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)
 - [ ] Check [cookiecutter](https://github.com/audreyr/cookiecutter)

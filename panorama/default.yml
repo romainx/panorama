@@ -1,0 +1,35 @@
+---
+# Panorama default configuration file
+# See the documentation https://github.com/romainx/panorama
+# WARN this configuration file is not safe since it will run the function defined in the function param
+
+# Metadata to retrieve (title, date and category are mandatory, do not remove them
+metadata_columns: [title, date, category]
+
+# Names of the tags
+tag_columns: []
+
+# Configurations
+confs:
+    # articles by year
+    - chart_id: nb_article_by_year
+      producer:
+        function: count_article_by_year
+      renderer:
+        chart: discreteBarChart
+    # articles by category
+    - chart_id: nb_article_by_category
+      producer:
+        function: count_article_by_column
+        args:
+          column: category
+      renderer:
+        chart: pieChart
+    # articles by category and year as a multi bar chart
+    - chart_id: nb_article_by_category_year
+      producer:
+        function: count_article_by_column_by_year
+        args:
+          column: category
+      renderer:
+        chart: multiBarChart

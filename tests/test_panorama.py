@@ -28,6 +28,7 @@ TEST_PAGE_TEMPLATE = 'test_page.html'
 
 TEST_DATA_FILE = os.path.join(TEST_DATA, 'p/article_data.p')
 
+CONF_FILE = os.path.join(CUR_DIR, 'panorama.yml')
 
 class TestGenerator(unittest.TestCase):
     def setUp(self):
@@ -57,7 +58,7 @@ class TestData(unittest.TestCase):
     def setUp(self):
         # Initializing the conf factory
         self.conf_factory = ConfFactory()
-        self.conf_factory.configure()
+        self.conf_factory.configure(CONF_FILE)
         # Initializing the data factory
         self.data_factory = self.conf_factory.data_factory
         self.data_factory.load_data(TEST_DATA_FILE)
@@ -90,3 +91,12 @@ class TestChart(unittest.TestCase):
         self.assertEqual(chart.name, expected_chart_name)
         self.assertIsNotNone(chart.htmlcontent)
         self.assertIsNotNone(chart.container)
+
+
+class TestConf(unittest.TestCase):
+    def setUp(self):
+        self.conf_factory = ConfFactory()
+        self.conf_factory.configure(CONF_FILE)
+
+    def test_load_conf(self):
+        pass

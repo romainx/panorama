@@ -1,7 +1,7 @@
 title: De si braves garçons
 date: 2014-12-21
 imgid: B00L3A8ZW6
-category: Critique
+category: Article
 tags: Roman, 4 étoiles, Gallimard, Modiano P., Sélection Romans, Enfance
 
 Après un Nobel et le visionnage d'un reportage de Bernard Pivot lui étant consacré, j'ai voulu lire du **Modiano** -- j'ai seulement deux livres à mon actif. On était dimanche -- non je ne voulais pas acheter de livre sur mon Kindle --, j'ai donc commandé le "Quarto" qui compile "l’épine dorsale de ses autres romans" et je suis parti au marché de Saint-Aubin bien décidé à dénicher chez les nombreux bouquinistes un volume, à la belle couverture crème et aux liserés rouges, siglé "NRF". Après avoir passé au crible quelques étals, j'en tiens un. Une belle prise -- qui ne figure pas dans le "Quarto" -- une édition de 1982 en très bon état pour 6 €: *De si braves garçons* -- il coutait 55 Francs à l'époque.

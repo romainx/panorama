@@ -3,11 +3,12 @@ from __future__ import unicode_literals
 
 from functools import partial
 
-from nvd3 import discreteBarChart, pieChart, stackedAreaChart, multiBarChart
+import yaml
 
-from .chart_factory import ChartFactory, create_chart
-from .data_factory import count_article_by_column, DataFactory, count_article_by_year, count_article_by_column_by_year, \
-    top_article
+# import * are necessary since functions will be dynamically called
+from .chart_factory import *
+from .data_factory import *
+from nvd3 import *
 
 
 class ConfFactory(object):
@@ -26,51 +27,51 @@ class ConfFactory(object):
         """
         self.confs[chart_id] = {'producer': producer, 'renderer': renderer}
 
-    def configure(self):
+    def configure(self, yaml_file):
         """
         Configure all the rendering to perform.
         The confs dict is populated with created configurations.
 
+        :param yaml_file: the configuration file to use
         """
+        with open(yaml_file, 'r') as f:
+            panorama_conf = yaml.load(f)
+
         # Configuring factories to:
         # - get only title, date and category from article metadata
         # - rename the first 4 tags with the names defined below
-        self.data_factory = DataFactory(metadata_columns=['title', 'date', 'category'],
-                                        tag_columns=['genre', 'ranking', 'publisher', 'writer'])
+
+        self.data_factory = DataFactory(metadata_columns=panorama_conf['metadata_columns'],
+                                        tag_columns=panorama_conf['tag_columns'])
         self.chart_factory = ChartFactory()
 
-        # articles by ranking
-        chart_id = 'nb_article_by_ranking'
-        producer = partial(count_article_by_column, column='ranking')
-        renderer = partial(create_chart, chart=discreteBarChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+        # Creating the configurations
+        for yaml_conf in panorama_conf['confs']:
+            chart_id = yaml_conf['chart_id']
+            producer = create_producer(yaml_conf['producer'])
+            renderer = create_renderer(yaml_conf['renderer'], chart_id)
+            self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
 
-        # articles by genre
-        chart_id = 'nb_article_by_genre'
-        producer = partial(count_article_by_column, column='genre')
-        renderer = partial(create_chart, chart=pieChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
 
-        # articles by year
-        chart_id = 'nb_article_by_year'
-        producer = partial(count_article_by_year)
-        renderer = partial(create_chart, chart=discreteBarChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+def create_producer(yaml_producer):
+    """
+    Create a producer from a piece of yaml configuration.
 
-        # articles by genre and year as a multi bar chart
-        chart_id = 'nb_article_by_genre_year'
-        producer = partial(count_article_by_column_by_year, column='genre')
-        renderer = partial(create_chart, chart=multiBarChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+    :param yaml_producer: the producer part of the configuration loaded from the yaml file
+    :return: the producer function
+    """
+    if 'args' in yaml_producer:
+        return partial(eval(yaml_producer['function']), **yaml_producer['args'])
+    else:
+        return partial(eval(yaml_producer['function']))
 
-        # articles by genre and year as a stacked area chart
-        chart_id = 'nb_article_by_ranking_year'
-        producer = partial(count_article_by_column_by_year, column='ranking')
-        renderer = partial(create_chart, chart=stackedAreaChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
 
-        # top 5 articles by writer and year as a bar chart
-        chart_id = 'top_article_by_writer'
-        producer = partial(top_article, column='writer', top=5)
-        renderer = partial(create_chart, chart=pieChart, name=chart_id)
-        self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+def create_renderer(yaml_renderer, name):
+    """
+    Create a renderer from a piece of yaml configuration.
+
+    :param yaml_renderer: the renderer part of the configuration loaded from the yaml file
+    :param name: the name of the renderer
+    :return: the renderer function
+    """
+    return partial(create_chart, chart=eval(yaml_renderer['chart']), name=name)
