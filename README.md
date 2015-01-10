@@ -11,14 +11,14 @@ No more talking, see:
 
 - the [example page](http://cdn.rawgit.com/romainx/panorama/master/tests/test_output/all_charts.html),
 - a [live example](http://aubonroman.com/stats.html),
-- or a screenshot
+- or a screenshot below
 
 ![Panorama screenshot](panorama_screenshot.png "Panorama screenshot")
 
 ### Functional overview
 
 Produce statistics based on posts metadata and display them by using several charts.
-The mapping between data and charts is done by configuration.
+The mapping between data and charts is done by configuration (YAML file).
 
 Metadata data used:
 
@@ -42,7 +42,7 @@ Some design elements:
 - The plugin mechanisms using [blinker](https://pypi.python.org/pypi/blinker).
 - A `DataFactory` using article metadata to produce statistical data. Data is stored in [Pandas][LK_PANDA] objects (`DataFrame` and `Series`), in consequence data can be manipulated by all the powerful tools provided by the library.
 - A `ChartFactory` using statistical data to render charts. Charts coming from the [Python Wrapper for NVD3][LK_PNVD3].
-- A `ConfFactory` to map data to charts. Part of the configuration is accessible through a configuration file.
+- A `ConfFactory` to map data to charts. Part of the configuration is accessible through a YAML configuration file.
 
 Generated charts are available in the Pelican `context` (holding the name `panorama_charts`) and can be used by any [Jinja](http://jinja.pocoo.org/) Pelican template to be integrated in the blog.
 
@@ -55,7 +55,7 @@ The most convenient way is to clone the repository, but the distribution can als
 
 ### Install plugin dependencies
 
-It is recommended to use virtualenv see the section "Development environment installation" for more details.
+It is recommended to use `virtualenv` see the section "Development environment installation" for more details.
 
 ```bash
 $ pip install -r requirements.txt
@@ -63,7 +63,7 @@ $ pip install -r requirements.txt
 
 ### Add NVD3 dependencies to your template
 
-Panorama generates HTML content requiring javascript and css to display.
+Panorama generates HTML content requiring javascript and CSS to display.
 
 Download the following files from [NVD3](http://nvd3.org):
 
@@ -88,7 +88,7 @@ Put them in this directory `themes/<your_theme>/static/panorama/` as described b
 	|       |-- nv.d3.css
 ```
 
-### Declare the plugin in the Pelican conf
+### Declare the plugin in the Pelican configuration
 
 These settings are made in the Pelican configuration file (`pelicanconf.py`). 
 
@@ -100,7 +100,7 @@ PLUGINS = ['panorama']
 ```
 Note: `PLUGIN_PATH` has to refer to the location where the Panorama plugin is stored, i.e. `PANORAMA_DIR`. For example, use `../panorama` if the panorama distribution is extracted at the same level than your Pelican site directory. Either the absolute path or the relative path to the plugin directory can be used in the settings file.
 
-Next it is required to configure the `DIRECT_TEMPLATES` setting. It tells Pelican which templates are to be used directly to render content. It is necessary to add the page that will display Panorama stats, let's call it `stats.html`.
+Next, it is required to configure the `DIRECT_TEMPLATES` setting. It tells Pelican which templates are to be used directly to render content. It is necessary to add the page that will display Panorama stats, let's call it `stats.html`.
 
 ```python
 DIRECT_TEMPLATES = (('index', 'tags', 'categories', 'authors', 'archives', 'stats'))
@@ -126,17 +126,34 @@ Do not forget to add the heading block to reference NVD3 dependencies (CSS + JS)
         <header>
           <h1>Stats</h1>
         </header>
-        {% for chart in panorama_charts.values() %}
-        <h2>{{ chart.name }}</h2>
         <div class="entry-content">
+				{% for chart in panorama_charts.values() %}
+        <h2>{{ chart.name }}</h2>
         {{ chart.container }}
         {{ chart.htmlcontent }}
-        </div>
         {% endfor %}
+				</div>
     </div>
 </section>
 {% endblock %}
 ```
+## Configuration
+
+### Principle
+
+Panorama loads its configuration from a YAML file. It tries to load a `panorama.yml` file located in the Pelican root directory. If this file does not exist, it uses the `default.yml` file located in the plugin directory.
+
+### Default configuration
+
+The default configuration provides 3 configurations that can be used as is :
+
+- `nb_article_by_year`: Display the number of articles by year as a bar chart.
+- `nb_article_by_category`: Display the number of articles by category as a pie chart.
+- `nb_article_by_category_year`: Display the number of articles by category (one series by category) and by year as a multi bar chart.
+
+### Custom configuration
+
+Todo
 
 ## How to
 

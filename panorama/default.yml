@@ -14,22 +14,22 @@ confs:
     # articles by year
     - chart_id: nb_article_by_year
       producer:
-        function: count_article_by_year
+        function_name: count_article_by_year
       renderer:
-        chart: discreteBarChart
+        class_name: discreteBarChart
     # articles by category
     - chart_id: nb_article_by_category
       producer:
-        function: count_article_by_column
+        function_name: count_article_by_column
         args:
           column: category
       renderer:
-        chart: pieChart
+        class_name: pieChart
     # articles by category and year as a multi bar chart
     - chart_id: nb_article_by_category_year
       producer:
-        function: count_article_by_column_by_year
+        function_name: count_article_by_column_by_year
         args:
           column: category
       renderer:
-        chart: multiBarChart
+        class_name: multiBarChart

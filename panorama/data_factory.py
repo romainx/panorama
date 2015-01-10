@@ -3,6 +3,10 @@ from __future__ import unicode_literals
 from pandas import DataFrame, Series, read_pickle
 
 
+FUNCTIONS_ALLOWED = ['count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
+                     'count_article_by_column']
+
+
 class DataFactory(object):
     """ Responsible to produce data ready to be rendered.
     """
@@ -75,6 +79,18 @@ class DataFactory(object):
         :return: the
         """
         return producer(data=self.data)
+
+
+def create_data_producer(function_name):
+    """ Instantiate the function from its name.
+    Raises an exception if the function is not allowed.
+
+    :param function_name: the name of the function
+    :return: the function
+    """
+    if function_name not in FUNCTIONS_ALLOWED:
+        raise ValueError("Function not allowed", function_name)
+    return eval(function_name)
 
 
 def count_article_by_column(data, column):

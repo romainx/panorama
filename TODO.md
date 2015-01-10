@@ -14,6 +14,7 @@
 	- [x] Correct the compatibility problem with mumpy and JSON, a workaround has been added
 	- [x] Finish test cases
 	- [x] Build more charts
+	- [ ] Externalize chart configuration
 - [x] Write the installation doc
 - [ ] Deployment tests [Tox](http://tox.readthedocs.org/en/latest/)
 - [ ] Check [cookiecutter](https://github.com/audreyr/cookiecutter)

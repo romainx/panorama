@@ -5,7 +5,6 @@ import os
 import io
 import sys
 
-from nvd3 import discreteBarChart
 from pandas.util.testing import assert_series_equal
 from pelican.generators import (ArticlesGenerator)
 from pelican.tests.support import unittest, get_settings
@@ -13,7 +12,7 @@ from jinja2 import Environment, PackageLoader
 from pandas import Series
 
 from panorama import panorama
-from panorama.chart_factory import ChartFactory, create_chart
+from panorama.chart_factory import ChartFactory, create_data_renderer
 from panorama.conf_factory import ConfFactory
 from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year, \
     top_article
@@ -85,7 +84,7 @@ class TestChart(unittest.TestCase):
 
     def test_render(self):
         expected_chart_name = "test_chart"
-        renderer = partial(create_chart, chart=discreteBarChart, name=expected_chart_name)
+        renderer = partial(create_data_renderer, class_name='discreteBarChart', name=expected_chart_name)
         data = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})
         chart = self.chart_factory.render(data=data, renderer=renderer)
         self.assertEqual(chart.name, expected_chart_name)

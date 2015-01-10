@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from nvd3 import multiBarChart, stackedAreaChart
+from nvd3 import *
 from pandas import Series
 import numpy
 
@@ -69,13 +69,14 @@ def numpy_convert(obj):
     return obj
 
 
-def create_chart(chart, name):
+def create_data_renderer(class_name, name):
     """ Initialize a chart, with defaults values and its name.
 
-    :param chart: the chart to create.
+    :param class_name: the class of the chart to create.
     :param name: its name.
     :return: the chart.
     """
+    chart = eval(class_name)
     # Initializing with default values
     conf = DEFAULT_CONF['DEFAULT'].copy()
     if chart in DEFAULT_CONF:

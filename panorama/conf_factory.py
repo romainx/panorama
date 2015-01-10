@@ -2,13 +2,15 @@
 from __future__ import unicode_literals
 
 from functools import partial
+import logging
 
 import yaml
 
-# import * are necessary since functions will be dynamically called
-from .chart_factory import *
-from .data_factory import *
-from nvd3 import *
+from .chart_factory import ChartFactory, create_data_renderer
+from .data_factory import DataFactory, create_data_producer
+
+
+logger = logging.getLogger(__name__)
 
 
 class ConfFactory(object):
@@ -60,10 +62,16 @@ def create_producer(yaml_producer):
     :param yaml_producer: the producer part of the configuration loaded from the yaml file
     :return: the producer function
     """
-    if 'args' in yaml_producer:
-        return partial(eval(yaml_producer['function']), **yaml_producer['args'])
-    else:
-        return partial(eval(yaml_producer['function']))
+    producer = None
+    try:
+        if 'args' in yaml_producer:
+            producer = partial(create_data_producer(function_name=yaml_producer['function_name']),
+                               **yaml_producer['args'])
+        else:
+            producer = partial(create_data_producer(function_name=yaml_producer['function_name']))
+    except ValueError as err:
+        logger.error(err, err.args)
+    return producer
 
 
 def create_renderer(yaml_renderer, name):
@@ -74,4 +82,4 @@ def create_renderer(yaml_renderer, name):
     :param name: the name of the renderer
     :return: the renderer function
     """
-    return partial(create_chart, chart=eval(yaml_renderer['chart']), name=name)
+    return partial(create_data_renderer, class_name=yaml_renderer['class_name'], name=name)

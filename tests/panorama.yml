@@ -10,47 +10,47 @@ confs:
     # articles by ranking
     - chart_id: nb_article_by_ranking
       producer:
-        function: count_article_by_column
+        function_name: count_article_by_column
         args:
           column: ranking
       renderer:
-        chart: discreteBarChart
+        class_name: discreteBarChart
     # articles by genre
     - chart_id: nb_article_by_genre
       producer:
-        function: count_article_by_column
+        function_name: count_article_by_column
         args:
           column: genre
       renderer:
-        chart: pieChart
+        class_name: pieChart
     # articles by year
     - chart_id: nb_article_by_year
       producer:
-        function: count_article_by_year
+        function_name: count_article_by_year
       renderer:
-        chart: discreteBarChart
+        class_name: discreteBarChart
     # articles by genre and year as a multi bar chart
     - chart_id: nb_article_by_genre_year
       producer:
-        function: count_article_by_column_by_year
+        function_name: count_article_by_column_by_year
         args:
           column: genre
       renderer:
-        chart: multiBarChart
+        class_name: multiBarChart
     # articles by genre and year as a stacked area chart
     - chart_id: nb_article_by_ranking_year
       producer:
-        function: count_article_by_column_by_year
+        function_name: count_article_by_column_by_year
         args:
           column: ranking
       renderer:
-        chart: stackedAreaChart
+        class_name: stackedAreaChart
     # top 5 articles by writer and year as a pie chart
     - chart_id: top_article_by_writer
       producer:
-        function: top_article
+        function_name: top_article
         args:
           column: writer
           top: 5
       renderer:
-        chart: pieChart
+        class_name: pieChart
