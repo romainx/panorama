@@ -81,7 +81,7 @@ class DataFactory(object):
         return producer(data=self.data)
 
 
-def create_data_producer(function_name):
+def get_producer(function_name):
     """ Instantiate the function from its name.
     Raises an exception if the function is not allowed.
 
@@ -89,7 +89,7 @@ def create_data_producer(function_name):
     :return: the function
     """
     if function_name not in FUNCTIONS_ALLOWED:
-        raise ValueError("Function not allowed", function_name)
+        raise ValueError("Function not allowed for a producer", function_name)
     return eval(function_name)
 
 

@@ -1,0 +1,26 @@
+---
+# Example containing configuration errors
+# Metadata to retrieve
+metadata_columns: [title, date, category]
+
+# Names of the tags
+tag_columns: [genre, ranking, publisher, writer]
+
+# Configurations
+confs:
+    # articles by ranking
+    - chart_id: nb_article_by_ranking
+      producer:
+        function_name: unknown_function
+        args:
+          column: ranking
+      renderer:
+        class_name: discreteBarChart
+    # articles by genre
+    - chart_id: nb_article_by_genre
+      producer:
+        function_name: count_article_by_column
+        args:
+          column: genre
+      renderer:
+        class_name: unknown_class

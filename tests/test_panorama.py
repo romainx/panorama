@@ -12,7 +12,7 @@ from jinja2 import Environment, PackageLoader
 from pandas import Series
 
 from panorama import panorama
-from panorama.chart_factory import ChartFactory, create_data_renderer
+from panorama.chart_factory import ChartFactory, get_renderer
 from panorama.conf_factory import ConfFactory
 from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year, \
     top_article
@@ -24,10 +24,12 @@ TEST_DATA = os.path.join(CUR_DIR, 'test_data')
 CONTENT_DIR = os.path.join(TEST_DATA, 'md')
 TEST_DIR = os.path.join(CUR_DIR, 'test_output')
 TEST_PAGE_TEMPLATE = 'test_page.html'
+CONF_DIR = os.path.join(TEST_DATA, 'conf')
 
 TEST_DATA_FILE = os.path.join(TEST_DATA, 'p/article_data.p')
 
-CONF_FILE = os.path.join(CUR_DIR, 'panorama.yml')
+CONF_FILE = os.path.join(CONF_DIR, 'panorama.yml')
+CONF_ERR_FILE = os.path.join(CONF_DIR, 'panorama_error.yml')
 
 class TestGenerator(unittest.TestCase):
     def setUp(self):
@@ -84,7 +86,7 @@ class TestChart(unittest.TestCase):
 
     def test_render(self):
         expected_chart_name = "test_chart"
-        renderer = partial(create_data_renderer, class_name='discreteBarChart', name=expected_chart_name)
+        renderer = partial(get_renderer(class_name='discreteBarChart'), name=expected_chart_name)
         data = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})
         chart = self.chart_factory.render(data=data, renderer=renderer)
         self.assertEqual(chart.name, expected_chart_name)
@@ -95,7 +97,15 @@ class TestChart(unittest.TestCase):
 class TestConf(unittest.TestCase):
     def setUp(self):
         self.conf_factory = ConfFactory()
-        self.conf_factory.configure(CONF_FILE)
 
     def test_load_conf(self):
-        pass
+        expected_result = ['nb_article_by_genre_year', 'top_article_by_writer', 'nb_article_by_ranking',
+                           'nb_article_by_ranking_year', 'nb_article_by_genre', 'nb_article_by_year']
+        self.conf_factory.configure(CONF_FILE)
+        self.assertEqual(self.conf_factory.confs.keys(), expected_result)
+
+    def test_load_bad_conf(self):
+        expected_result = []
+        self.conf_factory.configure(CONF_ERR_FILE)
+        self.assertEqual(self.conf_factory.confs.keys(), expected_result)
+

@@ -6,8 +6,8 @@ import logging
 
 import yaml
 
-from .chart_factory import ChartFactory, create_data_renderer
-from .data_factory import DataFactory, create_data_producer
+from .chart_factory import ChartFactory, get_renderer
+from .data_factory import DataFactory, get_producer
 
 
 logger = logging.getLogger(__name__)
@@ -50,9 +50,14 @@ class ConfFactory(object):
         # Creating the configurations
         for yaml_conf in panorama_conf['confs']:
             chart_id = yaml_conf['chart_id']
-            producer = create_producer(yaml_conf['producer'])
-            renderer = create_renderer(yaml_conf['renderer'], chart_id)
-            self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+            try:
+                producer = create_producer(yaml_conf['producer'])
+                renderer = create_renderer(yaml_conf['renderer'], chart_id)
+                self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
+            except ValueError as err:
+                logger.error(
+                    "Error while initializing the [%s] configuration, corresponding chart will not be generated",
+                    chart_id)
 
 
 def create_producer(yaml_producer):
@@ -63,14 +68,11 @@ def create_producer(yaml_producer):
     :return: the producer function
     """
     producer = None
-    try:
-        if 'args' in yaml_producer:
-            producer = partial(create_data_producer(function_name=yaml_producer['function_name']),
-                               **yaml_producer['args'])
-        else:
-            producer = partial(create_data_producer(function_name=yaml_producer['function_name']))
-    except ValueError as err:
-        logger.error(err, err.args)
+    if 'args' in yaml_producer:
+        producer = partial(get_producer(function_name=yaml_producer['function_name']),
+                           **yaml_producer['args'])
+    else:
+        producer = partial(get_producer(function_name=yaml_producer['function_name']))
     return producer
 
 
@@ -82,4 +84,4 @@ def create_renderer(yaml_renderer, name):
     :param name: the name of the renderer
     :return: the renderer function
     """
-    return partial(create_data_renderer, class_name=yaml_renderer['class_name'], name=name)
+    return partial(get_renderer(class_name=yaml_renderer['class_name']), name=name)

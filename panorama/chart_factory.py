@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from nvd3 import *
+from functools import partial
+
 from pandas import Series
+# Import required to instantiate charts
+from nvd3 import *
 import numpy
+
 
 # A dict used for chart configuration.
 # DEFAULT settings can be overwritten and/or completed by chart specific settings.
 # In this case, the chart class is used as key.
 DEFAULT_CONF = {
     'DEFAULT': {'name': None, 'display_container': False, 'height': 300, 'width': 700},
-    stackedAreaChart: {'use_interactive_guideline': True, 'x_axis_format': ''},
-    multiBarChart: {'x_axis_format': ''}
+    'stackedAreaChart': {'use_interactive_guideline': True, 'x_axis_format': ''},
+    'multiBarChart': {'x_axis_format': ''}
 }
+
+CLASS_ALLOWED = ['discreteBarChart', 'pieChart', 'multiBarChart', 'stackedAreaChart']
 
 
 class ChartFactory(object):
@@ -69,7 +75,19 @@ def numpy_convert(obj):
     return obj
 
 
-def create_data_renderer(class_name, name):
+def get_renderer(class_name):
+    """ Initialize a chart, with defaults values and its name.
+
+    :param class_name: the class of the chart to create.
+    :param name: its name.
+    :return: the chart.
+    """
+    if class_name not in CLASS_ALLOWED:
+        raise ValueError("Class not allowed for a renderer", class_name)
+    return partial(create_renderer, class_name=class_name)
+
+
+def create_renderer(class_name, name):
     """ Initialize a chart, with defaults values and its name.
 
     :param class_name: the class of the chart to create.
@@ -79,9 +97,9 @@ def create_data_renderer(class_name, name):
     chart = eval(class_name)
     # Initializing with default values
     conf = DEFAULT_CONF['DEFAULT'].copy()
-    if chart in DEFAULT_CONF:
+    if class_name in DEFAULT_CONF:
         # Overwriting with specific chart values if defined
-        conf.update(DEFAULT_CONF[chart])
+        conf.update(DEFAULT_CONF[class_name])
     # Setting the chart name
     conf['name'] = name
     # Passing the dictionary as keywords
