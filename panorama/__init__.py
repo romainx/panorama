@@ -7,7 +7,7 @@ Panorama is a Pelican plugin to generate statistics from blog posts
 Project location: https://github.com/romainx/panorama
 """
 
-__version__ = '0.0.2'
+__version__ = '0.1'
 __author__ = 'romainx'
 
 from .panorama import *

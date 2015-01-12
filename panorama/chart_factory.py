@@ -24,6 +24,7 @@ class ChartFactory(object):
     def __init__(self):
         # TODO extra series conf ?
         self.extra_series = {'tooltip': {'y_start': '', 'y_end': ' posts'}}
+        self.chart_conf = DEFAULT_CONF
 
     def render(self, data, renderer):
         """ Create a chart by using the renderer, add data, render and return it.
@@ -47,6 +48,36 @@ class ChartFactory(object):
         y = list_convert(l=series.tolist())
         x = list_convert(l=series.index.get_values())
         chart.add_serie(name=series.name, y=y, x=x, extra=self.extra_series)
+
+    def get_renderer(self, class_name):
+        """ Return a method responsible to create a chart corresponding to the given class_name.
+        Raises an exception if the class is not allowed.
+
+        :param class_name: the class of the chart to create.
+        :return: the method permitting to create the chart.
+        """
+        if class_name not in CLASS_ALLOWED:
+            raise ValueError("Class not allowed for a renderer", class_name)
+        return partial(self.create_chart, class_name=class_name)
+
+
+    def create_chart(self, class_name, name):
+        """ Initialize a chart, with defaults values and its name.
+
+        :param class_name: the class of the chart to create.
+        :param name: its name.
+        :return: the chart.
+        """
+        chart = eval(class_name)
+        # Initializing with default values
+        conf = self.chart_conf['DEFAULT'].copy()
+        if class_name in DEFAULT_CONF:
+            # Overwriting with specific chart values if defined
+            conf.update(DEFAULT_CONF[class_name])
+        # Setting the chart name
+        conf['name'] = name
+        # Passing the dictionary as keywords
+        return chart(**conf)
 
 
 def list_convert(l):
@@ -75,32 +106,3 @@ def numpy_convert(obj):
     return obj
 
 
-def get_renderer(class_name):
-    """ Initialize a chart, with defaults values and its name.
-
-    :param class_name: the class of the chart to create.
-    :param name: its name.
-    :return: the chart.
-    """
-    if class_name not in CLASS_ALLOWED:
-        raise ValueError("Class not allowed for a renderer", class_name)
-    return partial(create_renderer, class_name=class_name)
-
-
-def create_renderer(class_name, name):
-    """ Initialize a chart, with defaults values and its name.
-
-    :param class_name: the class of the chart to create.
-    :param name: its name.
-    :return: the chart.
-    """
-    chart = eval(class_name)
-    # Initializing with default values
-    conf = DEFAULT_CONF['DEFAULT'].copy()
-    if class_name in DEFAULT_CONF:
-        # Overwriting with specific chart values if defined
-        conf.update(DEFAULT_CONF[class_name])
-    # Setting the chart name
-    conf['name'] = name
-    # Passing the dictionary as keywords
-    return chart(**conf)

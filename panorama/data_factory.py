@@ -65,6 +65,7 @@ class DataFactory(object):
         # Creating the metadata DataFrame
         metadata_data_frame = DataFrame(metadata)
         # Replacing data in column category by its string value
+        # TODO maybe a better way to do that, it seems a bit ugly
         metadata_data_frame['category'] = metadata_data_frame['category'].apply(lambda x: str(x))
         # Merging the two DataFrame together
         self.data = metadata_data_frame.join(tags_data_frame)
@@ -80,17 +81,16 @@ class DataFactory(object):
         """
         return producer(data=self.data)
 
+    def get_producer(self, function_name):
+        """ Instantiate the function from its name.
+        Raises an exception if the function is not allowed.
 
-def get_producer(function_name):
-    """ Instantiate the function from its name.
-    Raises an exception if the function is not allowed.
-
-    :param function_name: the name of the function
-    :return: the function
-    """
-    if function_name not in FUNCTIONS_ALLOWED:
-        raise ValueError("Function not allowed for a producer", function_name)
-    return eval(function_name)
+        :param function_name: the name of the function
+        :return: the function
+        """
+        if function_name not in FUNCTIONS_ALLOWED:
+            raise ValueError("Function not allowed for a producer", function_name)
+        return eval(function_name)
 
 
 def count_article_by_column(data, column):

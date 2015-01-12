@@ -153,7 +153,26 @@ The default configuration provides 3 configurations that can be used as is :
 
 ### Custom configuration
 
-Todo
+A configuration is composed of:
+
+- a `chart_id`: It is the name used to reference the chart. This name will be used in the template to access to the chart from `panorama_charts` in the Pelican context.
+- a `producer`: It defines the source of the data, it is composed of:
+	- a `function_name`: The name of the function to call and its potential arguments `args`.
+- a `renderer`: It defines the way data are displayed, it is composed of:
+	- a `class_name`: The class of the chart to instantiate.
+
+#### Producer
+
+The available `producer` are:
+
+- `count_article_by_column`: Count the number of articles by the specified column. For example, if the specified `column`` is "category", it will group articles by category and count the number of articles in each category.
+	- `column`: the name of the column used to group data.
+- `count_article_by_year`: Count the number of articles by year. It will group articles by year and count the number of articles for each year.
+- `count_article_by_column_by_year`: Count the number of articles by year for each group. For example, if the specified `column` is "category", it will group articles by category and count, for each category, the number of articles by year.
+	- `column`: the name of the column used to group data.
+- top_article: Return the top elements of a group. For example, if the specified `column` is "category" and `top` is "3", it will group articles by category and return the 3 categories with the more articles. 
+	- `column`: the name of the column used to group data.
+	- `top`: the number of items to return
 
 ## How to
 
@@ -173,7 +192,7 @@ $ python -m unittest discover
 $ pip install virtualenv
 ```
 
-Configure the `.bashrc` file
+Configure the `.bash_profile` file
 
 ```bash
 # pip should only run if there is a virtualenv currently activated
@@ -185,7 +204,7 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cachecontent/*
 Source the file
 
 ```bash
-$ source .bashrc
+$ source .bash_profile
 ```
 
 #### Creating and activating the virtual environment

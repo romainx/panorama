@@ -6,8 +6,8 @@ import logging
 
 import yaml
 
-from .chart_factory import ChartFactory, get_renderer
-from .data_factory import DataFactory, get_producer
+from .chart_factory import ChartFactory
+from .data_factory import DataFactory
 
 
 logger = logging.getLogger(__name__)
@@ -47,41 +47,43 @@ class ConfFactory(object):
                                         tag_columns=panorama_conf['tag_columns'])
         self.chart_factory = ChartFactory()
 
+        # Configuring the charts if a chart configuration information is available in the conf file
+        if 'chart_conf' in panorama_conf:
+            self.chart_factory.chart_conf = panorama_conf['chart_conf']
+
         # Creating the configurations
         for yaml_conf in panorama_conf['confs']:
             chart_id = yaml_conf['chart_id']
             try:
-                producer = create_producer(yaml_conf['producer'])
-                renderer = create_renderer(yaml_conf['renderer'], chart_id)
+                producer = self.create_producer(yaml_conf['producer'])
+                renderer = self.create_renderer(yaml_conf['renderer'], chart_id)
                 self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
             except ValueError as err:
                 logger.error(
-                    "Error while initializing the [%s] configuration, corresponding chart will not be generated",
+                    "Error while initializing the [%s] configuration, corresponding chart will not be generated.",
                     chart_id)
 
+    def create_producer(self, yaml_producer):
+        """
+        Create a producer from a piece of yaml configuration.
 
-def create_producer(yaml_producer):
-    """
-    Create a producer from a piece of yaml configuration.
+        :param yaml_producer: the producer part of the configuration loaded from the yaml file
+        :return: the producer function
+        """
+        producer = None
+        if 'args' in yaml_producer:
+            producer = partial(self.data_factory.get_producer(function_name=yaml_producer['function_name']),
+                               **yaml_producer['args'])
+        else:
+            producer = partial(self.data_factory.get_producer(function_name=yaml_producer['function_name']))
+        return producer
 
-    :param yaml_producer: the producer part of the configuration loaded from the yaml file
-    :return: the producer function
-    """
-    producer = None
-    if 'args' in yaml_producer:
-        producer = partial(get_producer(function_name=yaml_producer['function_name']),
-                           **yaml_producer['args'])
-    else:
-        producer = partial(get_producer(function_name=yaml_producer['function_name']))
-    return producer
+    def create_renderer(self, yaml_renderer, name):
+        """
+        Create a renderer from a piece of yaml configuration.
 
-
-def create_renderer(yaml_renderer, name):
-    """
-    Create a renderer from a piece of yaml configuration.
-
-    :param yaml_renderer: the renderer part of the configuration loaded from the yaml file
-    :param name: the name of the renderer
-    :return: the renderer function
-    """
-    return partial(get_renderer(class_name=yaml_renderer['class_name']), name=name)
+        :param yaml_renderer: the renderer part of the configuration loaded from the yaml file
+        :param name: the name of the renderer
+        :return: the renderer function
+        """
+        return partial(self.chart_factory.get_renderer(class_name=yaml_renderer['class_name']), name=name)

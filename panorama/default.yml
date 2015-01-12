@@ -7,6 +7,7 @@
 metadata_columns: [title, date, category]
 
 # Names of the tags
+# Optional permits to name tags at fixed positions
 tag_columns: []
 
 # Configurations
@@ -33,3 +34,18 @@ confs:
           column: category
       renderer:
         class_name: multiBarChart
+
+# Chart configuration
+# Default configuration, then the configuration for each class
+# This setting is optional
+chart_conf:
+    DEFAULT:
+        name:  ~
+        display_container: false
+        height: 300
+        width: 700
+    stackedAreaChart:
+        use_interactive_guideline: true
+        x_axis_format:
+    multiBarChart:
+        x_axis_format
