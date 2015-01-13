@@ -57,7 +57,7 @@ class ChartFactory(object):
         :return: the method permitting to create the chart.
         """
         if class_name not in CLASS_ALLOWED:
-            raise ValueError("Class not allowed for a renderer", class_name)
+            raise ValueError('Class [%s] not allowed for a renderer' % class_name)
         return partial(self.create_chart, class_name=class_name)
 
 
@@ -97,8 +97,6 @@ def numpy_convert(obj):
     :param obj: the object to convert
     :return: the new object or the same object if it does not need to be converted
     """
-    if isinstance(obj, numpy.ndarray) and obj.ndim == 1:
-        return obj.tolist()
     if isinstance(obj, numpy.int_):
         return int(obj)
     elif isinstance(obj, numpy.float_):

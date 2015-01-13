@@ -89,7 +89,7 @@ class DataFactory(object):
         :return: the function
         """
         if function_name not in FUNCTIONS_ALLOWED:
-            raise ValueError("Function not allowed for a producer", function_name)
+            raise ValueError('Function [%s] not allowed for a renderer' % function_name)
         return eval(function_name)
 
 

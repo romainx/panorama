@@ -31,10 +31,9 @@ def generate_all(generator):
     conf_file = os.path.join(os.path.abspath(os.path.join(generator.settings['PATH'], os.pardir)), 'panorama.yml')
     if not os.path.isfile(conf_file):
         # The file is not file, using the default configuration file instead
-        logger.info('Panorama uses the default configuration file')
         conf_file = os.path.join(CUR_DIR, 'default.yml')
     conf_factory.configure(conf_file)
-
+    logger.info('Panorama configured with [%s]' % conf_file)
     # Initializing the data factory
     data_factory = conf_factory.data_factory
     data_factory.parse_data(generator.articles)
@@ -44,12 +43,23 @@ def generate_all(generator):
     charts = {}
     # Iterating over the confs to produce data and render the charts
     for conf_id, conf in six.iteritems(conf_factory.confs):
-        data = data_factory.produce(producer=conf['producer'])
-        chart = chart_factory.render(data=data, renderer=conf['renderer'])
-        charts[chart.name] = chart
+        # noinspection PyBroadException
+        try:
+            data = data_factory.produce(producer=conf['producer'])
+            chart = chart_factory.render(data=data, renderer=conf['renderer'])
+            charts[conf_id] = chart
+        except Exception as err:
+            logger.exception('Error while generating [%s] conf. -> chart not available.' % conf_id)
     # Setting results in the context
     # Charts will be accessible in the Pelican context under this name
     generator.context['panorama_charts'] = charts
+    # Generation summary
+    nb_chart_generated = len(charts)
+    nb_conf = len(conf_factory.confs)
+    if nb_chart_generated != nb_conf:
+        logger.warn('All charts not generated [%s/%s]' % (nb_chart_generated, nb_conf))
+    else:
+        logger.info('All charts generated [%s/%s]' % (nb_chart_generated, nb_conf))
 
     logger.info('Panorama generation ended')
 

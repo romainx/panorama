@@ -19,7 +19,6 @@ from panorama.data_factory import count_article_by_column_by_year, count_article
     top_article
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(stream=logging.StreamHandler())
 
 CUR_DIR = os.path.dirname(__file__)
 
@@ -108,7 +107,7 @@ class TestConf(unittest.TestCase):
         self.assertEqual(set(self.conf_factory.confs.keys()), set(expected_result))
 
     def test_load_bad_conf(self):
-        expected_result = {}
+        expected_result = ['nb_article_by_error']
         self.conf_factory.configure(CONF_ERR_FILE)
-        self.assertEqual(self.conf_factory.confs, expected_result)
+        self.assertEqual(set(self.conf_factory.confs.keys()), set(expected_result))
 

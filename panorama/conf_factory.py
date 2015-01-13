@@ -59,8 +59,8 @@ class ConfFactory(object):
                 renderer = self.create_renderer(yaml_conf['renderer'], chart_id)
                 self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
             except ValueError as err:
-                logger.error(
-                    "Error while initializing the [%s] configuration, corresponding chart will not be generated.",
+                logger.exception(
+                    'Error while initializing [%s] conf. -> chart not available.',
                     chart_id)
 
     def create_producer(self, yaml_producer):

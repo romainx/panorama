@@ -127,7 +127,7 @@ Do not forget to add the heading block to reference NVD3 dependencies (CSS + JS)
           <h1>Stats</h1>
         </header>
         <div class="entry-content">
-				{% for chart in panorama_charts.values() %}
+		{% for chart in panorama_charts.values() %}
         <h2>{{ chart.name }}</h2>
         {{ chart.container }}
         {{ chart.htmlcontent }}
@@ -165,14 +165,29 @@ A configuration is composed of:
 
 The available `producer` are:
 
-- `count_article_by_column`: Count the number of articles by the specified column. For example, if the specified `column`` is "category", it will group articles by category and count the number of articles in each category.
-	- `column`: the name of the column used to group data.
-- `count_article_by_year`: Count the number of articles by year. It will group articles by year and count the number of articles for each year.
-- `count_article_by_column_by_year`: Count the number of articles by year for each group. For example, if the specified `column` is "category", it will group articles by category and count, for each category, the number of articles by year.
-	- `column`: the name of the column used to group data.
-- top_article: Return the top elements of a group. For example, if the specified `column` is "category" and `top` is "3", it will group articles by category and return the 3 categories with the more articles. 
-	- `column`: the name of the column used to group data.
-	- `top`: the number of items to return
+- Single series data producer
+    - `count_article_by_column`: Count the number of articles by the specified column. For example, if the specified `column`` is "category", it will group articles by category and count the number of articles in each category.
+        - `column`: the name of the column used to group data.
+    - `count_article_by_year`: Count the number of articles by year. It will group articles by year and count the number of articles for each year.
+    - `top_article: Return the top elements of a group. For example, if the specified `column` is "category" and `top` is "3", it will group articles by category and return the 3 categories with the more articles. 
+        - `column`: the name of the column used to group data.
+        - `top`: the number of items to return
+- Multi series data producer
+    - `count_article_by_column_by_year`: Count the number of articles by year for each group. For example, if the specified `column` is "category", it will group articles by category and count, for each category, the number of articles by year.
+        - `column`: the name of the column used to group data.
+
+#### Renderer
+
+The available `renderer` are
+
+- Single series charts:
+    - `discreteBarChart`: A bar chart 
+    - `pieChart`: A pie chart
+- Multi series charts:
+- `multiBarChart`: A bar chart with several series that can be stacked
+- `stackedAreaChart`: An area chart with several series that can be stacked
+
+See the [Python Wrapper for NVD3][LK_PNVD3] documentation for more information.
 
 ## How to
 
