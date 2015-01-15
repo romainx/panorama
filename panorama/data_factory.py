@@ -46,10 +46,12 @@ class DataFactory(object):
         """
         tags = []
         metadata = []
+        # TODO not the more efficient way to do that I think.
         for article in articles:
-            # TODO not the more efficient way to do that I think.
-            # Extracting all tags name from an article and putting them in a Series
-            tags.append(Series([tag.name for tag in article.tags], ['tag_' + str(x) for x in range(len(article.tags))]))
+            if hasattr(article, 'tags'):
+                # Extracting all tags name from an article and putting them in a Series
+                tags.append(
+                    Series([tag.name for tag in article.tags], ['tag_' + str(x) for x in range(len(article.tags))]))
             # Selecting metadata, only the ones specified in the columns
             metadata.append(Series(
                 dict([(i, article.metadata[i]) for i in self.metadata_columns if i in article.metadata]),

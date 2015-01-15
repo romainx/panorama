@@ -71,9 +71,9 @@ class ChartFactory(object):
         chart = eval(class_name)
         # Initializing with default values
         conf = self.chart_conf['DEFAULT'].copy()
-        if class_name in DEFAULT_CONF:
-            # Overwriting with specific chart values if defined
-            conf.update(DEFAULT_CONF[class_name])
+        if class_name in self.chart_conf:
+            # Overriding with specific chart values if defined
+            conf.update(self.chart_conf[class_name])
         # Setting the chart name
         conf['name'] = name
         # Passing the dictionary as keywords

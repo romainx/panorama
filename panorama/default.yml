@@ -40,7 +40,6 @@ confs:
 # This setting is optional
 chart_conf:
     DEFAULT:
-        name:  ~
         display_container: false
         height: 300
         width: 700

@@ -54,3 +54,20 @@ confs:
           top: 5
       renderer:
         class_name: pieChart
+    # Error unknown column
+    - chart_id: top_article_error
+      producer:
+        function_name: top_article
+        args:
+          column: unknown_column
+          top: 5
+      renderer:
+        class_name: pieChart
+
+# Chart conf
+chart_conf:
+    DEFAULT:
+        height: 300
+        width: 700
+    discreteBarChart:
+        width: 500
