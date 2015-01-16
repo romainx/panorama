@@ -47,4 +47,4 @@ chart_conf:
         use_interactive_guideline: true
         x_axis_format:
     multiBarChart:
-        x_axis_format
+        x_axis_format:
