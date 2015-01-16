@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from functools import partial
 import os
 import io
-import sys
 import logging
 
 from pandas.util.testing import assert_series_equal
@@ -34,13 +33,15 @@ CONF_FILE = os.path.join(CONF_DIR, 'panorama.yml')
 CONF_ERR_FILE = os.path.join(CONF_DIR, 'panorama_error.yml')
 
 
+def create_generator():
+    settings = get_settings(filenames={})
+    settings['CACHE_CONTENT'] = False  # cache not needed for this logic tests
+    return ArticlesGenerator(context=settings.copy(), settings=settings,
+                             path=CONTENT_DIR, theme=settings['THEME'], output_path=None)
+
 class TestGenerator(unittest.TestCase):
     def setUp(self):
-        self.settings = get_settings(filenames={})
-        self.settings['CACHE_CONTENT'] = False  # cache not needed for this logic tests
-        self.generator = ArticlesGenerator(
-            context=self.settings.copy(), settings=self.settings,
-            path=CONTENT_DIR, theme=self.settings['THEME'], output_path=None)
+        self.generator = create_generator()
 
     def test_generate_default(self):
         # Registering plugin
@@ -62,17 +63,14 @@ class TestGenerator(unittest.TestCase):
             output_file.write(self.template_test_page.render(panorama_charts=self.generator.context['panorama_charts']))
 
 
-# TODO fix pickle to be usable in Python 2 & 3
-@unittest.skipIf(sys.version_info > (3, 0),
-                 'Not supported in Python 3.x due to test data decoding (pickle)')
 class TestData(unittest.TestCase):
     def setUp(self):
-        # Initializing the conf factory
-        self.conf_factory = ConfFactory()
-        self.conf_factory.configure(CONF_FILE)
-        # Initializing the data factory
-        self.data_factory = self.conf_factory.data_factory
-        self.data_factory.load_data(TEST_DATA_FILE)
+        generator = create_generator()
+        generator.generate_context()
+        conf_factory = ConfFactory()
+        conf_factory.configure(CONF_FILE)
+        self.data_factory = conf_factory.data_factory
+        self.data_factory.parse_data(generator.articles)
 
     def test_count_article_by_column_by_year(self):
         self.assertEqual(len(count_article_by_column_by_year(self.data_factory.data, 'genre')), 5)
@@ -82,7 +80,7 @@ class TestData(unittest.TestCase):
         assert_series_equal(count_article_by_column(self.data_factory.data, 'genre'), expected_result)
 
     def test_count_article_by_year(self):
-        expected_result = Series({2007: 1, 2008: 2, 2014: 7})
+        expected_result = Series({2007: 1, 2008: 2, 2010: 1, 2014: 7})
         assert_series_equal(count_article_by_year(self.data_factory.data), expected_result)
 
     def test_top_article(self):

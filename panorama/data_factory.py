@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from pandas import DataFrame, Series, read_pickle
+from pandas import DataFrame, Series
 
 
 FUNCTIONS_ALLOWED = ['count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
@@ -20,20 +20,6 @@ class DataFactory(object):
         self.data = None
         self.metadata_columns = metadata_columns
         self.tag_columns = tag_columns
-
-    def load_data(self, path):
-        """ Used, for test purpose, to load data from a pickle file.
-
-        :param path: the path of the file.
-        """
-        self.data = read_pickle(path)
-
-    def save_data(self, path):
-        """ Used, for test purpose, to save data to a pickle file.
-
-        :param path: the path of the file.
-        """
-        self.data.to_pickle(path)
 
     def parse_data(self, articles):
         """ Responsible to parse articles in order to extract data.

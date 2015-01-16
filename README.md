@@ -7,11 +7,7 @@
 
 **Panorama** is a [Pelican][LK_PELIC] plugin to generate **statistics from blog posts** (number of posts per year, categories and so on) and display them as **beautiful charts**.
 
-No more talking, see:
-
-- the [example page](http://cdn.rawgit.com/romainx/panorama/master/tests/test_output/all_charts.html),
-- a [live example](http://aubonroman.com/stats.html),
-- or a screenshot below
+No more talking, see a [live example](http://aubonroman.com/stats.html), or the screenshot below.
 
 ![Panorama screenshot](panorama_screenshot.png "Panorama screenshot")
 

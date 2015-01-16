@@ -1,7 +1,7 @@
 This is a super article !
 #########################
 
-:tags: foo, bar, foobar
+:tags: Roman Noir, bar, foobar
 :date: 2010-12-02 10:14
 :modified: 2010-12-02 10:20
 :category: yeah

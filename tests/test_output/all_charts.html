@@ -7,6 +7,55 @@
     <script src="https://raw.githubusercontent.com/novus/nvd3/master/nv.d3.min.js"></script>
 </head>
 <body>
+<h1>nb_article_by_year</h1>
+
+<div id="nb_article_by_year">
+    <svg style="width:700px;height:300px;"></svg>
+</div>
+
+
+<script>
+
+
+
+                data_nb_article_by_year=[{"values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 1, "x": 2010}, {"y": 7, "x": 2014}], "key": "title", "yAxis": "1"}];
+
+
+            nv.addGraph(function() {
+        var chart = nv.models.discreteBarChart();
+
+        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
+
+        var datum = data_nb_article_by_year;
+
+
+
+                    chart.yAxis
+                .tickFormat(d3.format(',.0f'));
+
+    
+    
+
+        
+
+
+
+            d3.select('#nb_article_by_year svg')
+            .datum(datum)
+            .transition().duration(500)
+            .attr('width', 700)
+            .attr('height', 300)
+            .call(chart);
+
+    
+        });
+
+
+
+
+
+</script>
+
 <h1>nb_article_by_category</h1>
 <div id="nb_article_by_category"><svg style="width:700px;height:300px;"></svg></div>
 
@@ -124,52 +173,6 @@
 
     });
 
-
-
-
-
-</script>
-
-<h1>nb_article_by_year</h1>
-<div id="nb_article_by_year"><svg style="width:700px;height:300px;"></svg></div>
-
-
-
-    <script>
-
-
-
-                data_nb_article_by_year=[{"values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 1, "x": 2010}, {"y": 7, "x": 2014}], "key": "title", "yAxis": "1"}];
-
-
-            nv.addGraph(function() {
-        var chart = nv.models.discreteBarChart();
-
-        chart.margin({top: 30, right: 60, bottom: 20, left: 60});
-
-        var datum = data_nb_article_by_year;
-
-
-
-                    chart.yAxis
-                .tickFormat(d3.format(',.0f'));
-
-    
-    
-
-        
-
-
-
-            d3.select('#nb_article_by_year svg')
-            .datum(datum)
-            .transition().duration(500)
-            .attr('width', 700)
-            .attr('height', 300)
-            .call(chart);
-
-    
-        });
 
 
 

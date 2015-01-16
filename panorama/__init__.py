@@ -8,6 +8,5 @@ Project location: https://github.com/romainx/panorama
 """
 
 __version__ = '0.1'
-__author__ = 'romainx'
 
 from .panorama import *
