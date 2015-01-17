@@ -33,15 +33,15 @@ CONF_FILE = os.path.join(CONF_DIR, 'panorama.yml')
 CONF_ERR_FILE = os.path.join(CONF_DIR, 'panorama_error.yml')
 
 
-def create_generator():
+def create_generator(path):
     settings = get_settings(filenames={})
     settings['CACHE_CONTENT'] = False  # cache not needed for this logic tests
     return ArticlesGenerator(context=settings.copy(), settings=settings,
-                             path=CONTENT_DIR, theme=settings['THEME'], output_path=None)
+                             path=path, theme=settings['THEME'], output_path=None)
 
 class TestGenerator(unittest.TestCase):
     def setUp(self):
-        self.generator = create_generator()
+        self.generator = create_generator(CONTENT_DIR)
 
     def test_generate_default(self):
         # Registering plugin
@@ -65,7 +65,7 @@ class TestGenerator(unittest.TestCase):
 
 class TestData(unittest.TestCase):
     def setUp(self):
-        generator = create_generator()
+        generator = create_generator(CONTENT_DIR)
         generator.generate_context()
         conf_factory = ConfFactory()
         conf_factory.configure(CONF_FILE)

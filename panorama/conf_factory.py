@@ -55,15 +55,15 @@ class ConfFactory(object):
         for yaml_conf in panorama_conf['confs']:
             chart_id = yaml_conf['chart_id']
             try:
-                producer = self.create_producer(yaml_conf['producer'])
-                renderer = self.create_renderer(yaml_conf['renderer'], chart_id)
+                producer = self._create_producer(yaml_conf['producer'])
+                renderer = self._create_renderer(yaml_conf['renderer'], chart_id)
                 self.append_conf(chart_id=chart_id, producer=producer, renderer=renderer)
             except ValueError as err:
                 logger.exception(
                     'Error while initializing [%s] conf. -> chart not available.',
                     chart_id)
 
-    def create_producer(self, yaml_producer):
+    def _create_producer(self, yaml_producer):
         """
         Create a producer from a piece of yaml configuration.
 
@@ -78,7 +78,7 @@ class ConfFactory(object):
             producer = partial(self.data_factory.get_producer(function_name=yaml_producer['function_name']))
         return producer
 
-    def create_renderer(self, yaml_renderer, name):
+    def _create_renderer(self, yaml_renderer, name):
         """
         Create a renderer from a piece of yaml configuration.
 

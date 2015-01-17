@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from pandas import DataFrame, Series
 
 
-FUNCTIONS_ALLOWED = ['count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
-                     'count_article_by_column']
+FUNCTIONS_ALLOWED = ('count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
+                     'count_article_by_column')
 
 
 class DataFactory(object):
@@ -54,7 +54,8 @@ class DataFactory(object):
         metadata_data_frame = DataFrame(metadata)
         # Replacing data in column category by its string value
         # TODO maybe a better way to do that, it seems a bit ugly
-        metadata_data_frame['category'] = metadata_data_frame['category'].apply(lambda x: str(x))
+        if 'category' in metadata_data_frame:
+            metadata_data_frame['category'] = metadata_data_frame['category'].apply(lambda x: str(x))
         # Merging the two DataFrame together
         self.data = metadata_data_frame.join(tags_data_frame)
 

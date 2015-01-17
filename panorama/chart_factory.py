@@ -17,7 +17,7 @@ DEFAULT_CONF = {
     'multiBarChart': {'x_axis_format': ''}
 }
 
-CLASS_ALLOWED = ['discreteBarChart', 'pieChart', 'multiBarChart', 'stackedAreaChart']
+CLASS_ALLOWED = ('discreteBarChart', 'pieChart', 'multiBarChart', 'stackedAreaChart')
 
 
 class ChartFactory(object):
@@ -35,18 +35,18 @@ class ChartFactory(object):
         """
         chart = renderer()
         if isinstance(data, Series):
-            self.add_series(series=data, chart=chart)
+            self._add_series(series=data, chart=chart)
         elif isinstance(data, list):
             for series in data:
-                self.add_series(series=series, chart=chart)
+                self._add_series(series=series, chart=chart)
         chart.buildcontent()
         return chart
 
-    def add_series(self, series, chart):
+    def _add_series(self, series, chart):
         # Converting values for Python 3.x compatibility, because numpy numbers are not supported by the JSON encoder
         # TODO fix it in a better way
-        y = list_convert(l=series.tolist())
-        x = list_convert(l=series.index.get_values())
+        y = _list_convert(l=series.tolist())
+        x = _list_convert(l=series.index.get_values())
         chart.add_serie(name=series.name, y=y, x=x, extra=self.extra_series)
 
     def get_renderer(self, class_name):
@@ -58,10 +58,9 @@ class ChartFactory(object):
         """
         if class_name not in CLASS_ALLOWED:
             raise ValueError('Class [%s] not allowed for a renderer' % class_name)
-        return partial(self.create_chart, class_name=class_name)
+        return partial(self._create_chart, class_name=class_name)
 
-
-    def create_chart(self, class_name, name):
+    def _create_chart(self, class_name, name):
         """ Initialize a chart, with defaults values and its name.
 
         :param class_name: the class of the chart to create.
@@ -80,7 +79,7 @@ class ChartFactory(object):
         return chart(**conf)
 
 
-def list_convert(l):
+def _list_convert(l):
     """ Convert list containing potential numpy objects in order to transform them in Python standard types.
     Other objects remain the same.
     This method is a workaround to the behavior of the JSON encoder that does not handle numpy numbers.
@@ -88,10 +87,10 @@ def list_convert(l):
     :param l: the list to convert
     :return: a new list with numpy objects converted and other objects remaining the same
     """
-    return list(map(numpy_convert, l))
+    return list(map(_numpy_convert, l))
 
 
-def numpy_convert(obj):
+def _numpy_convert(obj):
     """ Convert numpy numbers to standard numbers
 
     :param obj: the object to convert
