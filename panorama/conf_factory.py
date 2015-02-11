@@ -24,7 +24,7 @@ class ConfFactory(object):
         Add a a new entry in the confs dict.
 
         :param chart_id: the id of the chart that will be used to identify it.
-        :param producer: a data producer, a function returning a Series or a dict of Series.
+        :param producer: a data producer, a function returning a Series or a DataFrame.
         :param renderer: a data render, a function returning a Chart.
         """
         self.confs[chart_id] = {'producer': producer, 'renderer': renderer}

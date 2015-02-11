@@ -36,7 +36,7 @@ This plugin uses:
 Some design elements:
 
 - The `panorama` plugin compliant with the [blinker](https://pypi.python.org/pypi/blinker) mechanism used by Pelican.
-- A `data_factory` using article metadata to produce [Pandas][LK_PANDA] `Series` objects, in consequence data can be manipulated by all the powerful tools provided by the library.
+- A `data_factory` using article metadata to produce [Pandas][LK_PANDA] `DataFrame` objects, in consequence data can be manipulated by all the powerful tools provided by the library.
 - A `chart_factory` using data to render charts coming from the [Python Wrapper for NVD3][LK_PNVD3].
 - A `conf_factory` mapping data to charts according to the YAML configuration file.
 
@@ -122,24 +122,24 @@ Two more things:
 
 ```jinja
 {% extends 'base.html' %}
-{% block title %}Stats - {{ super() }}{% endblock title %}
-{% block content %}
-<link href="/theme/panorama/nvd3/src/nv.d3.css" rel="stylesheet"/>
-<script src="/theme/panorama/d3/d3.min.js"></script>
-<script src="/theme/panorama/nvd3/nv.d3.min.js"></script>
+{% block head %}
+{{ super() }}
+<link href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/panorama/nvd3/src/nv.d3.css" rel="stylesheet"/>
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/panorama/d3/d3.min.js"></script>
+<script src="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/panorama/nvd3/nv.d3.min.js"></script>
+{% endblock %}
 
-<section id="content" >
-    <div class="body">
-        <header>
-          <h1>Stats</h1>
-        </header>
-        <div class="entry-content">
+{% block content %}
+<section id="content">
+    <header>
+        <h1 class="entry-title">Statistiques</h1>
+    </header>
+    <div class="entry-content">
 		    {% for chart in panorama_charts.values() %}
-            <h2>{{ chart.name }}</h2>
-            {{ chart.container }}
-            {{ chart.htmlcontent }}
+                <h2>{{ chart.name }}</h2>
+                {{ chart.container }}
+                {{ chart.htmlcontent }}
             {% endfor %}
-		</div>
     </div>
 </section>
 {% endblock %}

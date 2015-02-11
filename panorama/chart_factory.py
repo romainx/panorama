@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from functools import partial
 
-from pandas import Series
+from pandas import Series, DataFrame
 # Import required to instantiate charts
 from nvd3 import *
 import numpy
@@ -29,15 +29,18 @@ class ChartFactory(object):
     def render(self, data, renderer):
         """ Create a chart by using the renderer, add data, render and return it.
 
-        :param data: the chart input data. Can be a Series or a dict of Series.
+        :param data: the chart input data. Can be a Series or a DataFrame.
         :param renderer: the renderer to use to create the chart.
         :return: the produced chart.
         """
         chart = renderer()
         if isinstance(data, Series):
             self._add_series(series=data, chart=chart)
-        elif isinstance(data, list):
-            for series in data:
+        elif isinstance(data, DataFrame):
+            for column in data.columns.values:
+                series = data[column]
+                # TODO in case of DataFrame series name is a tuple -> reducing it to its last element
+                series.name = column[1]
                 self._add_series(series=series, chart=chart)
         chart.buildcontent()
         return chart

@@ -73,7 +73,7 @@ class TestData(unittest.TestCase):
         self.data_factory.parse_data(generator.articles)
 
     def test_count_article_by_column_by_year(self):
-        self.assertEqual(len(count_article_by_column_by_year(self.data_factory.data, 'genre')), 5)
+        self.assertEqual(len(count_article_by_column_by_year(self.data_factory.data, 'genre')), 3)
 
     def test_count_article_by_column(self):
         expected_result = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})

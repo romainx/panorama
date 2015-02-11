@@ -18,7 +18,7 @@
 
 
 
-    data_nb_article_by_category=[{"values": [{"label": "Article", "value": 2}, {"label": "Critique", "value": 5}, {"label": "Info", "value": 3}, {"label": "yeah", "value": 1}], "key": "title"}];
+    data_nb_article_by_category=[{"key": "title", "values": [{"value": 2, "label": "Article"}, {"value": 5, "label": "Critique"}, {"value": 3, "label": "Info"}, {"value": 1, "label": "yeah"}]}];
 
     nv.addGraph(function() {
         var chart = nv.models.pieChart();
@@ -76,7 +76,7 @@
 
 
 
-                data_nb_article_by_year=[{"yAxis": "1", "values": [{"x": 2007, "y": 1}, {"x": 2008, "y": 2}, {"x": 2010, "y": 1}, {"x": 2014, "y": 7}], "key": "title"}];
+                data_nb_article_by_year=[{"key": "title", "values": [{"y": 1, "x": 2007}, {"y": 2, "x": 2008}, {"y": 1, "x": 2010}, {"y": 7, "x": 2014}], "yAxis": "1"}];
 
 
             nv.addGraph(function() {
@@ -123,7 +123,7 @@
 
 
 
-        data_nb_article_by_category_year=[{"yAxis": "1", "values": [{"x": 2007, "y": 0.0}, {"x": 2008, "y": 0.0}, {"x": 2009, "y": 0.0}, {"x": 2010, "y": 0.0}, {"x": 2011, "y": 0.0}, {"x": 2012, "y": 0.0}, {"x": 2013, "y": 0.0}, {"x": 2014, "y": 2.0}], "key": "Article"}, {"yAxis": "1", "values": [{"x": 2007, "y": 0.0}, {"x": 2008, "y": 1.0}, {"x": 2009, "y": 0.0}, {"x": 2010, "y": 0.0}, {"x": 2011, "y": 0.0}, {"x": 2012, "y": 0.0}, {"x": 2013, "y": 0.0}, {"x": 2014, "y": 4.0}], "key": "Critique"}, {"yAxis": "1", "values": [{"x": 2007, "y": 1.0}, {"x": 2008, "y": 1.0}, {"x": 2009, "y": 0.0}, {"x": 2010, "y": 0.0}, {"x": 2011, "y": 0.0}, {"x": 2012, "y": 0.0}, {"x": 2013, "y": 0.0}, {"x": 2014, "y": 1.0}], "key": "Info"}, {"yAxis": "1", "values": [{"x": 2007, "y": 0.0}, {"x": 2008, "y": 0.0}, {"x": 2009, "y": 0.0}, {"x": 2010, "y": 1.0}, {"x": 2011, "y": 0.0}, {"x": 2012, "y": 0.0}, {"x": 2013, "y": 0.0}, {"x": 2014, "y": 0.0}], "key": "yeah"}];
+        data_nb_article_by_category_year=[{"key": "Article", "values": [{"y": 0.0, "x": 2007}, {"y": 0.0, "x": 2008}, {"y": 0.0, "x": 2010}, {"y": 2.0, "x": 2014}], "yAxis": "1"}, {"key": "Critique", "values": [{"y": 0.0, "x": 2007}, {"y": 1.0, "x": 2008}, {"y": 0.0, "x": 2010}, {"y": 4.0, "x": 2014}], "yAxis": "1"}, {"key": "Info", "values": [{"y": 1.0, "x": 2007}, {"y": 1.0, "x": 2008}, {"y": 0.0, "x": 2010}, {"y": 1.0, "x": 2014}], "yAxis": "1"}, {"key": "yeah", "values": [{"y": 0.0, "x": 2007}, {"y": 0.0, "x": 2008}, {"y": 1.0, "x": 2010}, {"y": 0.0, "x": 2014}], "yAxis": "1"}];
 
     nv.addGraph(function() {
         var chart = nv.models.multiBarChart();

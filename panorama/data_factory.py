@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from pandas import DataFrame, Series
-
+from pandas import DataFrame, Series, pivot_table
+import numpy as np
 
 FUNCTIONS_ALLOWED = ('count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
                      'count_article_by_column')
@@ -63,7 +63,7 @@ class DataFactory(object):
         """ Call the producer method by passing it the data and simply returns the result.
         Producer methods are intended to return:
         - a Series
-        - a dict of Series
+        - a DataFrame
 
         :param producer: the producer method to call.
         :return: the
@@ -127,21 +127,11 @@ def count_article_by_column_by_year(data, column):
 
     :param data: the DataFrame containing articles
     :param column: the column used to group data
-    :return: a dict of Series
+    :return: a DataFrame
     """
-    # TODO maybe there is a better way to do that, but it works ;-)
-    # Computing a range of year to reindex series and filling the gaps
-    y_range = range(min(data['date']).year, max(data['date']).year + 1)
-    result = []
-    # Grouping data by column
-    groups = data.groupby([column])
-    for group_name, group in groups:
-        # Counting by year for each group
-        series = count_article_by_year(group)
-        series.name = group_name
-        # Indexing data to obtain the full year range
-        series = series.reindex(y_range)
-        # Filling missing values
-        series = series.fillna(0)
-        result.append(series)
-    return result
+    # Grouping data by the column and by year counting unique titles
+    table = pivot_table(data, values=['title'], index=[column, lambda x: data['date'][x].year],
+                        aggfunc=np.count_nonzero)
+    table = table.unstack(level=0)
+    table = table.fillna(value=0)
+    return table
