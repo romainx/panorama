@@ -34,17 +34,27 @@ confs:
           column: category
       renderer:
         class_name: multiBarChart
+    # articles by month
+    - chart_id: nb_article_by_month
+      producer:
+        function_name: count_article_by_month
+      renderer:
+        class_name: lineChart
 
 # Chart configuration
 # Default configuration, then the configuration for each class
 # This setting is optional
 chart_conf:
     DEFAULT:
-        display_container: false
+        display_container: False
         height: 300
         width: 700
     stackedAreaChart:
-        use_interactive_guideline: true
+        use_interactive_guideline: True
         x_axis_format:
     multiBarChart:
         x_axis_format:
+    lineChart:
+        use_interactive_guideline: True
+        x_is_date: True
+        x_axis_format: '%m-%Y'

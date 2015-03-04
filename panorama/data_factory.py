@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from pandas import DataFrame, Series, pivot_table
+from pandas import DataFrame, Series, pivot_table, to_datetime
 import numpy as np
 
 FUNCTIONS_ALLOWED = ('count_article_by_column_by_year', 'top_article', 'count_article', 'count_article_by_year',
-                     'count_article_by_column')
+                     'count_article_by_column', 'count_article_by_month')
 
 
 class DataFactory(object):
@@ -118,7 +118,8 @@ def top_article(data, column, top):
     :return: a Series containing the result
     """
     data = count_article_by_column(data=data, column=column)
-    data.sort(ascending=False)
+    # Sort is performed in place by default but enforcing it for clarity
+    data.sort(ascending=False, inplace=True)
     return data[:top]
 
 
@@ -132,6 +133,39 @@ def count_article_by_column_by_year(data, column):
     # Grouping data by the column and by year counting unique titles
     table = pivot_table(data, values=['title'], index=[column, lambda x: data['date'][x].year],
                         aggfunc=np.count_nonzero)
+    # Unstacking to display the chosen column values as DataFrame columns
     table = table.unstack(level=0)
+    # Filling the empty values with 0
     table = table.fillna(value=0)
+    # Dropping the unnecessary column level
+    table.columns = table.columns.droplevel(0)
     return table
+
+
+def count_article_by_month(data):
+    """ Count the number of articles grouped by year and month.
+    It produces a Time Series, so it requires to be plotted with a date axis.
+    Data is resampled to get all months (i.e the months with no posts with 0 value)
+
+    :param data: the DataFrame containing articles
+    :return: a DataFrame
+    """
+
+    # Grouping data by the by year and month counting unique titles
+    result = count_article(data.groupby([lambda x: data['date'][x].year, lambda x: data['date'][x].month]))
+    # Resetting index to break the multi index in columns
+    result = result.reset_index()
+    # Concatenating the year and month columns to compute a single column with the date (one by month)
+    result['concat'] = to_datetime(result.level_0 * 10000 + result.level_1 * 100 + 1, format='%Y%m%d')
+    # Setting this column as the index
+    result = result.set_index('concat')
+    # Resampling data to add missing month
+    result = result.resample('M')
+    # Filling missing month with 0
+    result = result.fillna(0)
+    # Dropping unnecessary columns
+    result = result.drop(['level_0', 'level_1'], 1)
+    # Renaming the column
+    result.columns = ['posts']
+    # Returning a Series selected from the DataFrame
+    return result['posts']

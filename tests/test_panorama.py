@@ -15,7 +15,7 @@ from panorama import panorama
 from panorama.chart_factory import ChartFactory
 from panorama.conf_factory import ConfFactory
 from panorama.data_factory import count_article_by_column_by_year, count_article_by_column, count_article_by_year, \
-    top_article
+    top_article, count_article_by_month
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +83,9 @@ class TestData(unittest.TestCase):
         expected_result = Series({2007: 1, 2008: 2, 2010: 1, 2014: 7})
         assert_series_equal(count_article_by_year(self.data_factory.data), expected_result)
 
+    def test_count_article_by_month(self):
+        self.assertEqual(len(count_article_by_month(self.data_factory.data)), 89)
+
     def test_top_article(self):
         expected_result = Series({'Gallimard': 3})
         assert_series_equal(top_article(self.data_factory.data, 'publisher', 1), expected_result)
@@ -110,7 +113,7 @@ class TestConf(unittest.TestCase):
         # top_article_error shall be in the configuration since the error is only detected at runtime
         expected_result = ['nb_article_by_genre_year', 'top_article_by_writer', 'nb_article_by_ranking',
                            'nb_article_by_ranking_year', 'nb_article_by_genre', 'nb_article_by_year',
-                           'top_article_error']
+                           'top_article_error', 'nb_article_by_month']
         self.conf_factory.configure(CONF_FILE)
         self.assertEqual(set(self.conf_factory.confs.keys()), set(expected_result))
 

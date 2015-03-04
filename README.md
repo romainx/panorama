@@ -152,11 +152,12 @@ Panorama loads its configuration from a YAML file. It tries to load a `panorama.
 
 ### Default configuration
 
-The default configuration provides default configuration and 3 configured charts that can be used as is :
+The default configuration provides default configuration and 4 configured charts that can be used as is :
 
-- `nb_article_by_year`: Display the number of articles by year as a bar chart.
-- `nb_article_by_category`: Display the number of articles by category as a pie chart.
-- `nb_article_by_category_year`: Display the number of articles by category (one series by category) and by year as a multi bar chart.
+- `nb_article_by_year`: Displays the number of articles by year as a bar chart.
+- `nb_article_by_category`: Displays the number of articles by category as a pie chart.
+- `nb_article_by_category_year`: Displays the number of articles by category (one series by category) and by year as a multi bar chart.
+- `nb_article_by_month`: Displays the number of articles by month as a line chart. 
 
 ### Custom configuration
 
@@ -202,10 +203,12 @@ The available `producer` are:
 - Single series data producer
     - `count_article_by_column`: Count the number of articles by the specified column. For example, if the specified `column`` is "category", it will group articles by category and count the number of articles in each category.
         - `column`: the name of the column used to group data.
-    - `count_article_by_year`: Count the number of articles by year. It will group articles by year and count the number of articles for each year.
-    - `top_article: Return the top elements of a group. For example, if the specified `column` is "category" and `top` is "3", it will group articles by category and return the 3 categories with the more articles. 
+    - `count_article_by_year`: Count the number of articles by year. It will group articles by year and count the number of articles for each year (years with 0 article are not returned).
+    - `count_article_by_month`: Count the number of articles by month. It will group articles by year and count the number of articles for each month (even mont with 0 articles).
+    - `top_article`: Return the top elements of a group. For example, if the specified `column` is "category" and `top` is "3", it will group articles by category and return the 3 categories with the more articles. 
         - `column`: the name of the column used to group data.
         - `top`: the number of items to return
+
 - Multi series data producer
     - `count_article_by_column_by_year`: Count the number of articles by year for each group. For example, if the specified `column` is "category", it will group articles by category and count, for each category, the number of articles by year.
         - `column`: the name of the column used to group data.
@@ -218,14 +221,15 @@ The available `renderer` are
     - `discreteBarChart`: A bar chart 
     - `pieChart`: A pie chart
 - Multi series charts:
-- `multiBarChart`: A bar chart with several series that can be stacked
-- `stackedAreaChart`: An area chart with several series that can be stacked
+	- `multiBarChart`: A bar chart with several series that can be stacked
+	- `stackedAreaChart`: An area chart with several series that can be stacked
+	- `lineChart`: A line chart
 
 See the [Python Wrapper for NVD3][LK_PNVD3], see the documentation for more information.
 
 #### Charts configuration
 
-Parameters to configure charts can be defined through the `chart_conf` dictionary. Its is possible to define `DEFAULT`settings and settings specific to each available charts. These specific settings override the `DEFAULT` configuration. In the example below the default `width` `700`is overriden for the `stackedAreaChart` chart with `500`. The parameters are the ones defined in the [Python Wrapper for NVD3][LK_PNVD3], see the documentation for more information.
+Parameters to configure charts can be defined through the `chart_conf` dictionary. Its is possible to define `DEFAULT`settings and settings specific to each available charts. These specific settings override the `DEFAULT` configuration. In the example below the default `width` `700` is overridden for the `stackedAreaChart` chart with `500`. The parameters are the ones defined in the [Python Wrapper for NVD3][LK_PNVD3], see the documentation for more information.
 
 ```YAML
 chart_conf:

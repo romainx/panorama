@@ -63,6 +63,12 @@ confs:
           top: 5
       renderer:
         class_name: pieChart
+    # articles by month
+    - chart_id: nb_article_by_month
+      producer:
+        function_name: count_article_by_month
+      renderer:
+        class_name: lineChart
 
 # Chart conf
 chart_conf:

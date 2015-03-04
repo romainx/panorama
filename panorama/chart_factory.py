@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from functools import partial
 
 from pandas import Series, DataFrame
-# Import required to instantiate charts
+# !! Import required to instantiate charts, do not remove
 from nvd3 import *
 import numpy
 
@@ -14,10 +14,11 @@ import numpy
 DEFAULT_CONF = {
     'DEFAULT': {'name': None, 'display_container': False, 'height': 300, 'width': 700},
     'stackedAreaChart': {'use_interactive_guideline': True, 'x_axis_format': ''},
-    'multiBarChart': {'x_axis_format': ''}
+    'multiBarChart': {'x_axis_format': ''},
+    'lineChart': {'x_is_date': True, 'x_axis_format': '%m-%Y'}
 }
 
-CLASS_ALLOWED = ('discreteBarChart', 'pieChart', 'multiBarChart', 'stackedAreaChart')
+CLASS_ALLOWED = ('discreteBarChart', 'pieChart', 'multiBarChart', 'stackedAreaChart', 'lineChart')
 
 
 class ChartFactory(object):
@@ -39,8 +40,6 @@ class ChartFactory(object):
         elif isinstance(data, DataFrame):
             for column in data.columns.values:
                 series = data[column]
-                # TODO in case of DataFrame series name is a tuple -> reducing it to its last element
-                series.name = column[1]
                 self._add_series(series=series, chart=chart)
         chart.buildcontent()
         return chart
@@ -103,6 +102,10 @@ def _numpy_convert(obj):
         return int(obj)
     elif isinstance(obj, numpy.float_):
         return float(obj)
+    elif isinstance(obj, numpy.datetime64):
+        epoch_delta = obj - numpy.datetime64('1970-01-01T00:00:00Z')
+        return epoch_delta / numpy.timedelta64(1, 'ms')
+    # TODO correct this hack from https://github.com/bokeh/bokeh/blob/master/bokeh/protocol.py
     return obj
 
 
