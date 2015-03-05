@@ -152,20 +152,21 @@ def count_article_by_month(data):
     """
 
     # Grouping data by the by year and month counting unique titles
-    result = count_article(data.groupby([lambda x: data['date'][x].year, lambda x: data['date'][x].month]))
+    table = pivot_table(data, values=['title'], index=[lambda x: data['date'][x].year, lambda x: data['date'][x].month],
+                        aggfunc=np.count_nonzero)
     # Resetting index to break the multi index in columns
-    result = result.reset_index()
+    table = table.reset_index()
     # Concatenating the year and month columns to compute a single column with the date (one by month)
-    result['concat'] = to_datetime(result.level_0 * 10000 + result.level_1 * 100 + 1, format='%Y%m%d')
+    table['concat'] = to_datetime(table.level_0 * 10000 + table.level_1 * 100 + 1, format='%Y%m%d')
     # Setting this column as the index
-    result = result.set_index('concat')
+    table = table.set_index('concat')
     # Resampling data to add missing month
-    result = result.resample('M')
+    table = table.resample('M')
     # Filling missing month with 0
-    result = result.fillna(0)
+    table = table.fillna(0)
     # Dropping unnecessary columns
-    result = result.drop(['level_0', 'level_1'], 1)
+    table = table.drop(['level_0', 'level_1'], 1)
     # Renaming the column
-    result.columns = ['posts']
+    table.columns = ['posts']
     # Returning a Series selected from the DataFrame
-    return result['posts']
+    return table['posts']
