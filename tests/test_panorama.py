@@ -4,10 +4,11 @@ from functools import partial
 import os
 import io
 import logging
+import unittest
 
 from pandas.util.testing import assert_series_equal
 from pelican.generators import (ArticlesGenerator)
-from pelican.tests.support import unittest, get_settings
+from pelican.settings import DEFAULT_CONFIG
 from jinja2 import Environment, PackageLoader
 from pandas import Series
 
@@ -34,7 +35,8 @@ CONF_ERR_FILE = os.path.join(CONF_DIR, 'panorama_error.yml')
 
 
 def create_generator(path):
-    settings = get_settings(filenames={})
+    settings = DEFAULT_CONFIG.copy()
+    settings['filenames'] = {}
     settings['CACHE_CONTENT'] = False  # cache not needed for this logic tests
     return ArticlesGenerator(context=settings.copy(), settings=settings,
                              path=path, theme=settings['THEME'], output_path=None)
@@ -77,18 +79,21 @@ class TestData(unittest.TestCase):
 
     def test_count_article_by_column(self):
         expected_result = Series({'BD': 4, 'Divers': 1, 'Jeunesse': 1, 'Roman': 3, 'Roman Noir': 1})
-        assert_series_equal(count_article_by_column(self.data_factory.data, 'genre'), expected_result)
+        print(count_article_by_column(self.data_factory.data, 'genre'))
+        print(expected_result)
+        assert_series_equal(count_article_by_column(self.data_factory.data, 'genre'), expected_result,
+                            check_names=False)
 
     def test_count_article_by_year(self):
         expected_result = Series({2007: 1, 2008: 2, 2010: 1, 2014: 7})
-        assert_series_equal(count_article_by_year(self.data_factory.data), expected_result)
+        assert_series_equal(count_article_by_year(self.data_factory.data), expected_result, check_names=False)
 
     def test_count_article_by_month(self):
         self.assertEqual(len(count_article_by_month(self.data_factory.data)), 89)
 
     def test_top_article(self):
         expected_result = Series({'Gallimard': 3})
-        assert_series_equal(top_article(self.data_factory.data, 'publisher', 1), expected_result)
+        assert_series_equal(top_article(self.data_factory.data, 'publisher', 1), expected_result, check_names=False)
 
 
 class TestChart(unittest.TestCase):
