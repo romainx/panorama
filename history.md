@@ -1,5 +1,9 @@
 # Changes history
 
+## 0.2.1
+
+- Updated to be compliant with the latest versions of dependencies
+
 ## 0.2.0
 
 - Added `lineChart` support configured by default to display time series

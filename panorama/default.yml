@@ -44,11 +44,13 @@ confs:
 # Chart configuration
 # Default configuration, then the configuration for each class
 # This setting is optional
+# color_category can be one of: category10, category20, category20b, category20c
 chart_conf:
     DEFAULT:
         display_container: False
         height: 300
         width: 700
+        color_category: category10
     stackedAreaChart:
         use_interactive_guideline: True
         x_axis_format:
